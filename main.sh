@@ -51,7 +51,7 @@ svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-
 svn export https://github.com/fw876/helloworld/trunk/shadowsocks-rust packages/shadowsocks-rust
 svn export https://github.com/fw876/helloworld/trunk/shadowsocksr-libev packages/shadowsocksr-libev
 cd packages
-git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" net/brook net/chinadns-ng net/dns2tcp net/hysteria net/naiveproxy net/sagernet-core net/simple-obfs net/ssocks net/tcping net/trojan-plus net/v2ray-geodata net/v2ray-plugin net/xray-plugin net/trojan net/v2ray-core
+git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" net/brook net/chinadns-ng net/dns2tcp net/hysteria net/naiveproxy net/sagernet-core net/simple-obfs net/ssocks net/tcping net/trojan-plus net/v2ray-geodata net/v2ray-plugin net/xray-plugin net/trojan net/v2ray-core net/cdnspeedtest 
 cd ..
 
 #sed -i "s/\.\.\/\.\./\$(TOPDIR)\/feeds\/packages/g" brook/Makefile hysteria/Makefile sagernet-core/Makefile v2ray-core/Makefile v2ray-plugin/Makefile xray-plugin/Makefile
@@ -130,6 +130,11 @@ sed -i '$i /etc/init.d/dockerd restart &' luci-app-docker*/root/etc/uci-defaults
 
 #smartdns
 svn export https://github.com/immortalwrt/packages/trunk/net/smartdns packages/smartdns
+
+#cloudflarespeedtest
+svn export https://github.com/mingxiaoyu/luci-app-cloudflarespeedtest/trunk/applications/luci-app-cloudflarespeedtest
+
+
 
 cd packages
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
