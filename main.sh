@@ -130,10 +130,8 @@ sed -i '$i /etc/init.d/dockerd restart &' luci-app-docker*/root/etc/uci-defaults
 
 #smartdns
 svn export https://github.com/immortalwrt/packages/trunk/net/smartdns packages/smartdns
-#sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile
 
-# cd packages
+cd packages
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
 # sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile
 
