@@ -62,6 +62,5 @@ jobs:
         uses: Mattraks/delete-workflow-runs@v2.0.2
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository: canmeng12/packages
           retain_days: 1
           keep_minimum_runs: 1
