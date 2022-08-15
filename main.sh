@@ -62,6 +62,7 @@ done
 
 #ssrplus
 svn export https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus
+svn export https://github.com/fw876/helloworld/trunk/lua-neturl  packages/lua-neturl
 
 #vssr
 git clone --depth 1 https://github.com/jerrykuku/luci-app-vssr
