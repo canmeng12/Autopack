@@ -59,8 +59,9 @@ jobs:
           git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
 
       - name: 删除工作流运行
-        uses: Mattraks/delete-workflow-runs@v2.0.2
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
+          repository: ${{ github.repository }}
           retain_days: 1
           keep_minimum_runs: 1
