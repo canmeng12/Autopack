@@ -42,19 +42,17 @@ svn export https://github.com/kiddin9/openwrt-packages/trunk/adguardhome package
 #sed -i 's/default y/default n/g' ./*adguardhome/Makefile
 
 #passwall
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk ./ && rm -rf .svn && rm -rf .github
-#rm -rf xray-core trojan-go
+
 svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall ./luci-app-passwall
 #sed -i '92 s/n/y/' ./luci-app-passwall/Makefile
 #sed -i '148 s/n /y /' ./luci-app-passwall/Makefile
 
 svn export https://github.com/fw876/helloworld/trunk/shadowsocks-rust packages/shadowsocks-rust
 svn export https://github.com/fw876/helloworld/trunk/shadowsocksr-libev packages/shadowsocksr-libev
+
 cd packages
 git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" net/brook net/chinadns-ng net/dns2tcp net/hysteria net/naiveproxy net/sagernet-core net/simple-obfs net/ssocks net/tcping net/trojan-plus net/v2ray-geodata net/v2ray-plugin net/xray-plugin net/trojan net/v2ray-core net/cdnspeedtest 
 cd ..
-
-#sed -i "s/\.\.\/\.\./\$(TOPDIR)\/feeds\/packages/g" brook/Makefile hysteria/Makefile sagernet-core/Makefile v2ray-core/Makefile v2ray-plugin/Makefile xray-plugin/Makefile
 
 for i in "dns2socks" "microsocks" "ipt2socks" "pdnsd-alt" "redsocks2"; do \
   svn export "https://github.com/immortalwrt/packages/trunk/net/$i" "packages/$i"; \
@@ -134,8 +132,6 @@ svn export https://github.com/immortalwrt/packages/trunk/net/smartdns packages/s
 
 #cloudflarespeedtest
 svn export https://github.com/mingxiaoyu/luci-app-cloudflarespeedtest/trunk/applications/luci-app-cloudflarespeedtest
-
-
 
 cd packages
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
