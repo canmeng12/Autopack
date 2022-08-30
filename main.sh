@@ -122,10 +122,10 @@ svn export https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-arpb
 git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset 
 
 #docke
-#svn export https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-dockerman 
-svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman
-sed -i 's/+dockerd/+dockerd +cgroupfs-mount/' luci-app-docker*/Makefile
-sed -i '$i /etc/init.d/dockerd restart &' luci-app-docker*/root/etc/uci-defaults/*
+svn export https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-dockerman 
+#svn export https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman
+#sed -i 's/+dockerd/+dockerd +cgroupfs-mount/' luci-app-docker*/Makefile
+#sed -i '$i /etc/init.d/dockerd restart &' luci-app-docker*/root/etc/uci-defaults/*
 
 #smartdns
 svn export https://github.com/immortalwrt/packages/trunk/net/smartdns packages/smartdns
