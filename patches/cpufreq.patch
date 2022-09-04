@@ -1,5 +1,5 @@
 diff --git a/luci-app-cpufreq/Makefile b/luci-app-cpufreq/Makefile
-index 36ea355..1ead2f0 100644
+index 38c362c..6357a8b 100644
 --- a/luci-app-cpufreq/Makefile
 +++ b/luci-app-cpufreq/Makefile
 @@ -5,7 +5,7 @@
@@ -10,9 +10,9 @@ index 36ea355..1ead2f0 100644
 +#LUCI_DEPENDS:=@(arm||aarch64)
  LUCI_PKGARCH:=all
  
- PKG_NAME:=luci-app-cpufreq
+ include ../../luci.mk
 diff --git a/luci-app-cpufreq/root/etc/config/cpufreq b/luci-app-cpufreq/root/etc/config/cpufreq
-index 5c2c070..b5893ce 100644
+index 5c2c070..67c0637 100644
 --- a/luci-app-cpufreq/root/etc/config/cpufreq
 +++ b/luci-app-cpufreq/root/etc/config/cpufreq
 @@ -1,3 +1,7 @@
@@ -24,9 +24,8 @@ index 5c2c070..b5893ce 100644
 +	option factor '10'
 +	option minifreq '300000'
 +	option governor 'ondemand'
-\ No newline at end of file
 diff --git a/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq b/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
-index c9dee88..6ab21d3 100755
+index c9dee88..f0b3bcc 100755
 --- a/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 +++ b/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 @@ -63,15 +63,15 @@ case "$DISTRIB_TARGET" in
@@ -44,7 +43,7 @@ index c9dee88..6ab21d3 100755
  			else
  				# RK3328
 -				CPU_MAX_FREQ="1512000"
-+				CPU_MAX_FREQ="1800000"
++				CPU_MAX_FREQ="1608000"
  			fi
  			uci_write_config 0 schedutil 816000 $CPU_MAX_FREQ
  		fi
