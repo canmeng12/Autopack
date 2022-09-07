@@ -47,6 +47,8 @@ svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-
 #sed -i '92 s/n/y/' ./luci-app-passwall/Makefile
 #sed -i '148 s/n /y /' ./luci-app-passwall/Makefile
 
+svn export https://github.com/xiaorouji/openwrt-passwall/trunk/sing-box packages/sing-box
+
 svn export https://github.com/fw876/helloworld/trunk/shadowsocks-rust packages/shadowsocks-rust
 svn export https://github.com/fw876/helloworld/trunk/shadowsocksr-libev packages/shadowsocksr-libev
 
