@@ -2,7 +2,7 @@ diff --git a/packages/smartdns/Makefile b/packages/smartdns/Makefile
 index d918c5b..58f81d8 100644
 --- a/packages/smartdns/Makefile
 +++ b/packages/smartdns/Makefile
-@@ -6,13 +6,13 @@
+@@ -5,13 +5,13 @@
  include $(TOPDIR)/rules.mk
  
  PKG_NAME:=smartdns
