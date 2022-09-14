@@ -35,11 +35,11 @@ sed -i 's/1.9rem/1rem/' luci-theme-edge/htdocs/luci-static/edge/cascade.css
 sed -i 's@.*mediaurlbase*@#&@g' luci-theme*/root/etc/uci-defaults/30_luci-theme-*
 
 #adguardhome
-svn export https://github.com/kiddin9/openwrt-packages/trunk/luci-app-adguardhome
-svn export https://github.com/kiddin9/openwrt-packages/trunk/adguardhome packages/adguardhome
+svn export https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-adguardhome
+svn export https://github.com/sirpdboy/sirpdboy-package/trunk/adguardhome packages/adguardhome
 #sed -i 's@.*AdGuardHome.yaml*@#&@g' ./*adguardhome/Makefile
 #sed -i 's/AdGuardHome.yaml/config\/AdGuardHome.yaml/g' ./*adguardhome/root/etc/config/AdGuardHome
-#sed -i 's/default y/default n/g' ./*adguardhome/Makefile
+sed -i 's/default y/default n/g' ./*adguardhome/Makefile
 
 #passwall
 
