@@ -130,7 +130,8 @@ svn export https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-dock
 #sed -i '$i /etc/init.d/dockerd restart &' luci-app-docker*/root/etc/uci-defaults/*
 
 #smartdns
-svn export https://github.com/immortalwrt/packages/trunk/net/smartdns packages/smartdns
+svn export https://github.com/pymumu/luci-app-smartdns/trunk/ luci-app-smartdns
+svn export https://github.com/pymumu/openwrt-smartdns/trunk/ packages/smartdns
 
 #cloudflarespeedtest
 svn export https://github.com/mingxiaoyu/luci-app-cloudflarespeedtest/trunk/applications/luci-app-cloudflarespeedtest
