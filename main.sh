@@ -36,10 +36,12 @@ sed -i 's@.*mediaurlbase*@#&@g' luci-theme*/root/etc/uci-defaults/30_luci-theme-
 
 #adguardhome
 svn export https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-adguardhome
+cd luci-app-adguardhome/po && ln -s zh-cn zh_Hans && cd ..& cd ..
 svn export https://github.com/sirpdboy/sirpdboy-package/trunk/adguardhome packages/adguardhome
 #sed -i 's@.*AdGuardHome.yaml*@#&@g' ./*adguardhome/Makefile
 #sed -i 's/AdGuardHome.yaml/config\/AdGuardHome.yaml/g' ./*adguardhome/root/etc/config/AdGuardHome
 sed -i 's/default y/default n/g' ./*adguardhome/Makefile
+
 
 #passwall
 
