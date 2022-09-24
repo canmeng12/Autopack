@@ -64,7 +64,7 @@ index 26cd7d3..97cca14 100644
  		echo -n "0">/var/run/AdGredir
  	fi
 -	config_get configpath $CONFIGURATION configpath "/etc/AdGuardHome.yaml"
-+	config_get configpath $CONFIGURATION configpath "/etc/config//AdGuardHome.yaml"
++	config_get configpath $CONFIGURATION configpath "/etc/config/AdGuardHome.yaml"
  	AdGuardHome_PORT=$(config_editor "dns.port" "" "$configpath" "1")
  	if [ ! -s "$configpath" ]; then
  		cp -f /usr/share/AdGuardHome/AdGuardHome_template.yaml $configpath
