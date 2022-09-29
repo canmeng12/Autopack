@@ -12,7 +12,9 @@ on:
 
 jobs:
   build:
-    if: github.event.repository.owner.id == github.event.sender.id
+    if: |
+      github.event.repository.owner.id == github.event.sender.id
+      contains(toJson(github.event.pull_request.assignee), 'ecp-maya-devops-adsk')
     runs-on: ubuntu-latest
 
     name: 更新packages
