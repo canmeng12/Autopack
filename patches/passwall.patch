@@ -1,7 +1,7 @@
-diff --git a/luci-app-passwall/Makefile b/luci-app-passwall1/Makefile
+diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
 index 59c68db..b711b9c 100644
 --- a/luci-app-passwall/Makefile
-+++ b/luci-app-passwall1/Makefile
++++ b/luci-app-passwall/Makefile
 @@ -66,7 +66,7 @@ config PACKAGE_$(PKG_NAME)_Iptables_Transparent_Proxy
  	select PACKAGE_ipset
  	select PACKAGE_ipt2socks
@@ -52,10 +52,10 @@ index 59c68db..b711b9c 100644
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
  	bool "Include Xray"
-diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall1/root/usr/share/passwall/0_default_config
+diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
 index 1e5dbf8..e139f31 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
-+++ b/luci-app-passwall1/root/usr/share/passwall/0_default_config
++++ b/luci-app-passwall/root/usr/share/passwall/0_default_config
 @@ -46,8 +46,8 @@ config global_rules
  	option chnroute_update '1'
  	option chnroute6_update '1'
