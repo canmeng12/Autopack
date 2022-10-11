@@ -1,5 +1,5 @@
 diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
-index b74b294..d5d610c 100644
+index b74b294..7a2b760 100644
 --- a/luci-app-passwall/Makefile
 +++ b/luci-app-passwall/Makefile
 @@ -46,7 +46,7 @@ define Package/$(PKG_NAME)/config
@@ -20,7 +20,7 @@ index b74b294..d5d610c 100644
  
  			config PACKAGE_$(PKG_NAME)_INCLUDE_NaiveProxy
  				bool "Include NaiveProxy"
-@@ -94,12 +94,12 @@ define Package/$(PKG_NAME)/config
+@@ -94,24 +94,24 @@ define Package/$(PKG_NAME)/config
  				bool "Include Shadowsocks Libev Client"
  				select PACKAGE_shadowsocks-libev-ss-local
  				select PACKAGE_shadowsocks-libev-ss-redir
@@ -35,7 +35,12 @@ index b74b294..d5d610c 100644
  
  			config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
  				bool "Include Shadowsocks Rust Client"
-@@ -111,7 +111,7 @@ define Package/$(PKG_NAME)/config
+ 				depends on aarch64||arm||i386||mips||mipsel||x86_64
+ 				select PACKAGE_shadowsocks-rust-sslocal
+-				default y if aarch64
++				default y
+ 
+ 			config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  				bool "Include Shadowsocks Rust Server"
  				depends on aarch64||arm||i386||mips||mipsel||x86_64
  				select PACKAGE_shadowsocks-rust-ssserver
@@ -44,21 +49,22 @@ index b74b294..d5d610c 100644
  
  			config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
  				bool "Include ShadowsocksR Libev Client"
-@@ -147,7 +147,7 @@ define Package/$(PKG_NAME)/config
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
- 				bool "Include V2ray-Plugin (Shadowsocks Plugin)"
- 				select PACKAGE_v2ray-plugin
--				default y if aarch64||arm||i386||x86_64
-+				default n if aarch64||arm||i386||x86_64
- 
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
- 				bool "Include Xray"
-
 diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
-index 1e5dbf8..e139f31 100644
+index 447ed42..b01592d 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
 +++ b/luci-app-passwall/root/usr/share/passwall/0_default_config
-@@ -46,8 +46,8 @@ config global_rules
+@@ -32,8 +32,8 @@ config global_forwarding
+ 	option tcp_redir_ports '22,25,53,143,465,587,853,993,995,80,443'
+ 	option udp_redir_ports '1:65535'
+ 	option accept_icmp '0'
+-	option use_nft '0'
+-	option tcp_proxy_way 'redirect'
++	option use_nft '1'
++	option tcp_proxy_way 'tproxy'
+ 	option ipv6_tproxy '0'
+ 	option sniffing '1'
+ 	option route_only '0'
+@@ -47,8 +47,8 @@ config global_rules
  	option chnroute_update '1'
  	option chnroute6_update '1'
  	option gfwlist_update '1'
