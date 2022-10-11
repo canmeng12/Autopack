@@ -73,7 +73,7 @@ git clone --depth 1 https://github.com/zxlhhyccc/luci-app-v2raya
 
 #bypass
 svn export https://github.com/kiddin9/openwrt-bypass/trunk/luci-app-bypass
-svn export https://github.com/kiddin9/openwrt-bypass/trunk/lua-maxminddb  packages/lua-maxminddb
+svn export https://github.com/jerrykuku/lua-maxminddb/trunk/ packages/lua-maxminddb
 
 
 #文件传输
