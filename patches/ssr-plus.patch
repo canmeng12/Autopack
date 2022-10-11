@@ -1,0 +1,23 @@
+diff --git a/luci-app-ssr-plus/Makefile b/luci-app-ssr-plus/Makefile
+index 7a820ea..c912241 100644
+--- a/luci-app-ssr-plus/Makefile
++++ b/luci-app-ssr-plus/Makefile
+@@ -61,8 +61,7 @@ select PACKAGE_luci-lib-ipkg if PACKAGE_$(PKG_NAME)
+ 
+ choice
+ 	prompt "Shadowsocks Client Selection"
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client if aarch64
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
++	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
+ 
+ 	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Client
+ 	bool "None"
+@@ -78,7 +77,7 @@ endchoice
+ 
+ choice
+ 	prompt "Shadowsocks Server Selection"
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server if aarch64
++	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
+ 	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server if i386||x86_64||arm
+ 	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
+ 
