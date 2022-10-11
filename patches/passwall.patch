@@ -1,5 +1,5 @@
 diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
-index b74b294..7a2b760 100644
+index b74b294..59d0fbe 100644
 --- a/luci-app-passwall/Makefile
 +++ b/luci-app-passwall/Makefile
 @@ -46,7 +46,7 @@ define Package/$(PKG_NAME)/config
@@ -49,6 +49,15 @@ index b74b294..7a2b760 100644
  
  			config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
  				bool "Include ShadowsocksR Libev Client"
+@@ -147,7 +147,7 @@ define Package/$(PKG_NAME)/config
+ 			config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
+ 				bool "Include V2ray-Plugin (Shadowsocks Plugin)"
+ 				select PACKAGE_v2ray-plugin
+-				default y if aarch64||arm||i386||x86_64
++				default n if aarch64||arm||i386||x86_64
+ 
+ 			config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
+ 				bool "Include Xray"
 diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
 index 447ed42..b01592d 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
