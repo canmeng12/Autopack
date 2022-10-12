@@ -131,8 +131,8 @@ sed -i 's/+dockerd/+dockerd +cgroupfs-mount/' luci-app-docker*/Makefile
 sed -i '$i /etc/init.d/dockerd restart &' luci-app-docker*/root/etc/uci-defaults/*
 
 #smartdns
-svn export https://github.com/pymumu/luci-app-smartdns/trunk/ luci-app-smartdns
-svn export https://github.com/pymumu/openwrt-smartdns/trunk/ packages/smartdns
+#svn export https://github.com/pymumu/luci-app-smartdns/trunk/ luci-app-smartdns
+#svn export https://github.com/pymumu/openwrt-smartdns/trunk/ packages/smartdns
 
 #cloudflarespeedtest
 svn export https://github.com/mingxiaoyu/luci-app-cloudflarespeedtest/trunk/applications/luci-app-cloudflarespeedtest
