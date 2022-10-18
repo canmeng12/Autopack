@@ -1,63 +1,60 @@
 diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
-index b74b294..59d0fbe 100644
+index 59c68db..7507e6a 100644
 --- a/luci-app-passwall/Makefile
 +++ b/luci-app-passwall/Makefile
-@@ -46,7 +46,7 @@ define Package/$(PKG_NAME)/config
- 				select PACKAGE_ipset
- 				select PACKAGE_ipt2socks
- 				select PACKAGE_iptables
--				select PACKAGE_iptables-legacy
-+				select PACKAGE_iptables-nft
- 				select PACKAGE_iptables-mod-conntrack-extra
- 				select PACKAGE_iptables-mod-iprange
- 				select PACKAGE_iptables-mod-socket
-@@ -82,7 +82,7 @@ define Package/$(PKG_NAME)/config
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_Hysteria
- 				bool "Include Hysteria"
- 				select PACKAGE_hysteria
--				default n
-+				default y
+@@ -66,7 +66,7 @@ config PACKAGE_$(PKG_NAME)_Iptables_Transparent_Proxy
+ 	select PACKAGE_ipset
+ 	select PACKAGE_ipt2socks
+ 	select PACKAGE_iptables
+-	select PACKAGE_iptables-legacy
++	select PACKAGE_iptables-nft
+ 	select PACKAGE_iptables-mod-conntrack-extra
+ 	select PACKAGE_iptables-mod-iprange
+ 	select PACKAGE_iptables-mod-socket
+@@ -98,7 +98,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Haproxy
  
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_NaiveProxy
- 				bool "Include NaiveProxy"
-@@ -94,24 +94,24 @@ define Package/$(PKG_NAME)/config
- 				bool "Include Shadowsocks Libev Client"
- 				select PACKAGE_shadowsocks-libev-ss-local
- 				select PACKAGE_shadowsocks-libev-ss-redir
--				default y
-+				default n
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Hysteria
+ 	bool "Include Hysteria"
+-	default n
++	default y
  
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server
- 				bool "Include Shadowsocks Libev Server"
- 				select PACKAGE_shadowsocks-libev-ss-server
--				default y if aarch64||arm||i386||x86_64
-+				default n if aarch64||arm||i386||x86_64
+ config PACKAGE_$(PKG_NAME)_INCLUDE_NaiveProxy
+ 	bool "Include NaiveProxy"
+@@ -107,21 +107,21 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_NaiveProxy
  
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
- 				bool "Include Shadowsocks Rust Client"
- 				depends on aarch64||arm||i386||mips||mipsel||x86_64
- 				select PACKAGE_shadowsocks-rust-sslocal
--				default y if aarch64
-+				default y
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
+ 	bool "Include Shadowsocks Libev Client"
+-	default y
++	default n
  
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
- 				bool "Include Shadowsocks Rust Server"
- 				depends on aarch64||arm||i386||mips||mipsel||x86_64
- 				select PACKAGE_shadowsocks-rust-ssserver
--				default n
-+				default y
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server
+ 	bool "Include Shadowsocks Libev Server"
+-	default y if aarch64||arm||i386||x86_64
++	default n if aarch64||arm||i386||x86_64
  
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
- 				bool "Include ShadowsocksR Libev Client"
-@@ -147,7 +147,7 @@ define Package/$(PKG_NAME)/config
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
- 				bool "Include V2ray-Plugin (Shadowsocks Plugin)"
- 				select PACKAGE_v2ray-plugin
--				default y if aarch64||arm||i386||x86_64
-+				default n if aarch64||arm||i386||x86_64
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
+ 	bool "Include Shadowsocks Rust Client"
+ 	depends on aarch64||arm||i386||mips||mipsel||x86_64
+-	default y if aarch64
++	default y
  
- 			config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
- 				bool "Include Xray"
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
+ 	bool "Include Shadowsocks Rust Server"
+ 	depends on aarch64||arm||i386||mips||mipsel||x86_64
+-	default n
++	default y
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
+ 	bool "Include ShadowsocksR Libev Client"
+@@ -149,7 +149,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
+ 	bool "Include V2ray-Plugin (Shadowsocks Plugin)"
+-	default y if aarch64||arm||i386||x86_64
++	default n if aarch64||arm||i386||x86_64
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
+ 	bool "Include Xray"
 diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
 index 447ed42..b01592d 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
