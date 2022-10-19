@@ -6,7 +6,7 @@ index 59c68db..7507e6a 100644
  	select PACKAGE_ipset
  	select PACKAGE_ipt2socks
  	select PACKAGE_iptables
--	select PACKAGE_iptables-legacy
+-	select PACKAGE_iptables-zz-legacy
 +	select PACKAGE_iptables-nft
  	select PACKAGE_iptables-mod-conntrack-extra
  	select PACKAGE_iptables-mod-iprange
