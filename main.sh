@@ -55,6 +55,7 @@ svn export https://github.com/fw876/helloworld/trunk/shadowsocksr-libev packages
 
 cd packages
 git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" net/brook net/chinadns-ng net/dns2tcp net/hysteria net/naiveproxy net/sagernet-core net/simple-obfs net/ssocks net/tcping net/trojan-plus net/v2ray-geodata net/v2ray-plugin net/xray-plugin net/trojan net/v2ray-core net/xray-core net/cdnspeedtest 
+svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core/test.sh
 cd ..
 
 for i in "dns2socks" "microsocks" "ipt2socks" "pdnsd-alt" "redsocks2"; do \
