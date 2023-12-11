@@ -73,7 +73,7 @@ jobs:
           git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
           git branch -D ${{matrix.target}}
           git branch -m ${{matrix.target}}
-          git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
+          git push -f "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
           # git add .
           # git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
           # git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
