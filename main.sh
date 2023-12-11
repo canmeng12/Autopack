@@ -73,7 +73,8 @@ rm -rf helloworld
 
 #vssr
 #git clone --depth 1 https://github.com/jerrykuku/luci-app-vssr
-git clone https://github.com/canmeng12/packages.git cm && cd cm && git reset --hard e8d9fcb && mv -n luci-app-vssr .. && cd ..
+git clone --depth 1 https://github.com/liuran001/openwrt-packages packages15 && mv -n packages15/luci-app-vssr ./
+rm -rf packages15
 
 #v2raya
 git clone --depth 1 https://github.com/zxlhhyccc/luci-app-v2raya
