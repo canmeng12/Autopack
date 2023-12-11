@@ -1,0 +1,69 @@
+diff --git a/luci-app-ssr-plus/Makefile b/luci-app-ssr-plus/Makefile
+index 38a3d7e..e983bfd 100644
+--- a/luci-app-ssr-plus/Makefile
++++ b/luci-app-ssr-plus/Makefile
+@@ -64,10 +64,11 @@ LUCI_DEPENDS:= \
+ define Package/$(PKG_NAME)/config
+ select PACKAGE_luci-lib-ipkg if PACKAGE_$(PKG_NAME)
+ 
++menu "Configuration"
++
+ choice
+ 	prompt "Shadowsocks Client Selection"
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client if aarch64 || x86_64
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
++	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
+ 
+ 	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Client
+ 	bool "None"
+@@ -83,9 +84,7 @@ endchoice
+ 
+ choice
+ 	prompt "Shadowsocks Server Selection"
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server if aarch64
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server if i386||x86_64||arm
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
++	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
+ 
+ 	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
+ 	bool "None"
+@@ -101,8 +100,7 @@ endchoice
+ 
+ choice
+ 	prompt "V2ray-core Selection"
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_Xray if aarch64||arm||i386||x86_64
+-	default PACKAGE_$(PKG_NAME)_INCLUDE_NONE_V2RAY
++	default PACKAGE_$(PKG_NAME)_INCLUDE_V2ray
+ 
+ 	config PACKAGE_$(PKG_NAME)_INCLUDE_NONE_V2RAY
+ 	bool "None"
+@@ -174,12 +172,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server
+ 	bool "Include ShadowsocksR Libev Server"
+-	default y if i386||x86_64||arm
++	default n
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan
+ 	bool "Include Trojan"
+ 	select PACKAGE_$(PKG_NAME)_INCLUDE_IPT2Socks
+ 	default n
++endmenu
+ endef
+ 
+ define Package/$(PKG_NAME)/conffiles
+
+diff --git a/luci-app-ssr-plus/root/etc/init.d/shadowsocksr b/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
+index 2415b62..23d3897 100755
+--- a/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
++++ b/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
+@@ -1050,6 +1050,9 @@ start() {
+ 	echolog "----------start------------"
+ 	mkdir -p /var/run /var/lock /var/log /tmp/dnsmasq.d $TMP_BIN_PATH $TMP_DNSMASQ_PATH
+ 	echo "conf-dir=${TMP_DNSMASQ_PATH}" >"/tmp/dnsmasq.d/dnsmasq-ssrplus.conf"
++	if [ "$(uci_get_by_type global pdnsd_enable 0)" == "3" ]; then
++		[ -z "$(opkg status mosdns 2>/dev/null | grep 'Status' | awk -F ': ' '{print $2}' 2>/dev/null)" ] && echolog "依赖 mosdns未安装..."
++	fi
+ 	if load_config; then
+ 		Start_Run
+ 		start_rules

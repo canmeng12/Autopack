@@ -1,0 +1,48 @@
+diff --git a/luci-app-cpufreq/Makefile b/luci-app-cpufreq/Makefile
+index 38c362c..6357a8b 100644
+--- a/luci-app-cpufreq/Makefile
++++ b/luci-app-cpufreq/Makefile
+@@ -5,7 +5,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ LUCI_TITLE:=LuCI for CPU Freq Setting
+-LUCI_DEPENDS:=@(arm||aarch64)
++#LUCI_DEPENDS:=@(arm||aarch64)
+ LUCI_PKGARCH:=all
+ 
+ include ../../luci.mk
+diff --git a/luci-app-cpufreq/root/etc/config/cpufreq b/luci-app-cpufreq/root/etc/config/cpufreq
+index 9004f1b..b65d234 100644
+--- a/luci-app-cpufreq/root/etc/config/cpufreq
++++ b/luci-app-cpufreq/root/etc/config/cpufreq
+@@ -1,5 +1,10 @@
+ 
+ config settings 'cpufreq'
++	option maxfreq '716000'
++	option upthreshold '50'
++	option factor '10'
++	option minifreq '300000'
++	option governor 'ondemand'
+ 
+ config settings 'global'
+ 
+diff --git a/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq b/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
+index f4e6bdb..485e4bb 100755
+--- a/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
++++ b/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
+@@ -45,12 +45,12 @@ case "$DISTRIB_TARGET" in
+ 			uci_write_config 6 schedutil 816000 2208000
+ 		elif echo "$CPU_POLICYS" | grep -q "4"; then
+ 			# RK3399
+-			uci_write_config 0 schedutil 600000 1608000
+-			uci_write_config 4 schedutil 600000 2016000
++			uci_write_config 0 schedutil 600000 1800000
++			uci_write_config 4 schedutil 600000 2208000
+ 		else
+ 			if ! echo "$CPU_FREQS" | grep -q "1992000"; then
+ 				# RK3328
+-				CPU_MAX_FREQ="1512000"
++				CPU_MAX_FREQ="1608000"
+ 			fi
+ 			uci_write_config 0 schedutil 816000 "$CPU_MAX_FREQ"
+ 		fi

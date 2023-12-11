@@ -1,0 +1,79 @@
+name: 同步包
+
+on:
+  push:
+    paths:
+      - ".github/workflows/package.yml"
+      - "patches/*"
+      - "*.sh"
+  schedule:
+    - cron: 0 */12 * * *
+  watch:
+    types: started
+  repository_dispatch:
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-latest
+
+    name: 更新packages
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [main, dev]
+
+    steps:
+      - name: 删除工作流运行
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 1
+          keep_minimum_runs: 1
+
+      - name: 将存储库签出到运行器
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 初始化环境
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          sudo timedatectl set-timezone "Asia/Shanghai"
+
+      - name: 克隆包
+        run: |
+          cd $GITHUB_WORKSPACE
+          chmod +x ${{matrix.target}}.sh
+          git clone https://github.com/canmeng12/packages.git ${{matrix.target}}
+          cd ${{matrix.target}}
+          if [ "${{ matrix.target }}" = "dev" ]; then
+              git checkout ${{matrix.target}}
+          fi
+          git rm -r --cache * >/dev/null 2>&1 &
+          rm -rf `find ./* -maxdepth 0 -type d ! -name "diy"` >/dev/null 2>&1
+          $GITHUB_WORKSPACE/${{matrix.target}}.sh
+
+      - name: 补丁
+        run: |
+          find "patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d $GITHUB_WORKSPACE/${{matrix.target}} -p1 -E --forward --no-backup-if-mismatch"
+
+      - name: 上传包
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          [ -e $GITHUB_WORKSPACE/LICENSE ] && cp $GITHUB_WORKSPACE/LICENSE $GITHUB_WORKSPACE/${{matrix.target}}
+          #[ -e $GITHUB_WORKSPACE/README.md ] && cp $GITHUB_WORKSPACE/README.md $GITHUB_WORKSPACE/${{matrix.target}}
+          cd $GITHUB_WORKSPACE/${{matrix.target}}
+          git checkout --orphan latest_branch
+          git add -A
+          git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
+          git branch -D ${{matrix.target}}
+          git branch -m ${{matrix.target}}
+          git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
+          # git add .
+          # git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
+          # git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
