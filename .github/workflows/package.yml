@@ -68,12 +68,12 @@ jobs:
           [ -e $GITHUB_WORKSPACE/LICENSE ] && cp $GITHUB_WORKSPACE/LICENSE $GITHUB_WORKSPACE/${{matrix.target}}
           #[ -e $GITHUB_WORKSPACE/README.md ] && cp $GITHUB_WORKSPACE/README.md $GITHUB_WORKSPACE/${{matrix.target}}
           cd $GITHUB_WORKSPACE/${{matrix.target}}
-          git checkout --orphan latest_branch
-          git add -A
-          git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
-          git branch -D ${{matrix.target}}
-          git branch -m ${{matrix.target}}
-          git push -f "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
-          # git add .
+          # git checkout --orphan latest_branch
+          # git add -A
           # git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
-          # git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
+          # git branch -D ${{matrix.target}}
+          # git branch -m ${{matrix.target}}
+          # git push -f "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
+          git add .
+          git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
+          git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
