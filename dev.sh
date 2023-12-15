@@ -74,6 +74,8 @@ rm -rf luci
 #sed -i 's,2016,2208,g' luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 #sed -i 's,1512,1608,g' luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 
+git clone --depth 1 https://github.com/immortalwrt/homeproxy luci-app-homeproxy
+
 #svn export https://github.com/lllrrr/oppackages/trunk/luci-app-pwdHackDeny
 
 sed -i \
