@@ -1,0 +1,48 @@
+diff --git a/packages/cpufreq/Makefile b/packages/cpufreq/Makefile
+index c71f1f3..60c57ca 100644
+--- a/packages/cpufreq/Makefile
++++ b/packages/cpufreq/Makefile
+@@ -11,7 +11,7 @@ include $(INCLUDE_DIR)/package.mk
+ 
+ define Package/cpufreq
+   TITLE:=CPU Frequency Scaling adjustment tool
+-  DEPENDS:=@(arm||aarch64)
++#  DEPENDS:=@(arm||aarch64)
+   PKGARCH:=all
+ endef
+ 
+diff --git a/packages/cpufreq/files/cpufreq.config b/packages/cpufreq/files/cpufreq.config
+index 9004f1b..b65d234 100644
+--- a/packages/cpufreq/files/cpufreq.config
++++ b/packages/cpufreq/files/cpufreq.config
+@@ -1,5 +1,10 @@
+ 
+ config settings 'cpufreq'
++	option maxfreq '716000'
++	option upthreshold '50'
++	option factor '10'
++	option minifreq '300000'
++	option governor 'ondemand'
+ 
+ config settings 'global'
+ 
+diff --git a/packages/cpufreq/files/cpufreq.uci b/packages/cpufreq/files/cpufreq.uci
+index 4ee49c9..3bef546 100644
+--- a/packages/cpufreq/files/cpufreq.uci
++++ b/packages/cpufreq/files/cpufreq.uci
+@@ -45,12 +45,12 @@ case "$DISTRIB_TARGET" in
+ 			uci_write_config 6 schedutil 816000 2208000
+ 		elif echo "$CPU_POLICYS" | grep -q "4"; then
+ 			# RK3399
+-			uci_write_config 0 schedutil 600000 1608000
+-			uci_write_config 4 schedutil 600000 2016000
++			uci_write_config 0 schedutil 600000 1800000
++			uci_write_config 4 schedutil 600000 2208000
+ 		else
+ 			if ! echo "$CPU_FREQS" | grep -q "1992000"; then
+ 				# RK3328
+-				CPU_MAX_FREQ="1512000"
++				CPU_MAX_FREQ="1608000"
+ 			fi
+ 			uci_write_config 0 schedutil 816000 "$CPU_MAX_FREQ"
+ 		fi

@@ -67,7 +67,7 @@ rm -rf packages1
 
 git_sparse_clone master "https://github.com/immortalwrt/luci" "imm" applications/{luci-app-cpulimit,luci-app-webadmin,luci-app-cpufreq}
 
-git clone --depth 1 https://github.com/immortalwrt/immortalwrt && mv -n package/emortal/cpufreq ./packages/
+git clone --depth 1 https://github.com/immortalwrt/immortalwrt && mv -n immortalwrt/package/emortal/cpufreq ./packages/
 rm -rf immortalwrt
 
 #ssrplus

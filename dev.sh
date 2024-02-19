@@ -67,7 +67,8 @@ rm -rf OpenClash
 #CPU 性能优化调节
 #svn export https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-cpufre
 git clone --depth 1 https://github.com/immortalwrt/luci && mv -n luci/applications/luci-app-cpufreq ./
-git clone --depth 1 https://github.com/immortalwrt/immortalwrt && mv -n package/emortal/cpufreq ./packages/
+
+git clone --depth 1 https://github.com/immortalwrt/immortalwrt && mv -n immortalwrt/package/emortal/cpufreq ./packages/
 rm -rf luci && rm -rf immortalwrt
 #sed -i 's@.*aarch64*@#&@g' luci-app-cpufreq/Makefile
 #sed -i 's/\@(aarch64||arm)/ /g' luci-app-cpufreq/Makefile
