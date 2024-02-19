@@ -1,56 +1,61 @@
 diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
-index ffa6ebb..815e3ce 100644
+index 7befa19..4d78558 100644
 --- a/luci-app-passwall/Makefile
 +++ b/luci-app-passwall/Makefile
-@@ -69,7 +69,7 @@ config PACKAGE_$(PKG_NAME)_Iptables_Transparent_Proxy
- 	select PACKAGE_ipset
- 	select PACKAGE_ipt2socks
- 	select PACKAGE_iptables
--	select PACKAGE_iptables-zz-legacy
-+	select PACKAGE_iptables-nft
- 	select PACKAGE_iptables-mod-conntrack-extra
- 	select PACKAGE_iptables-mod-iprange
- 	select PACKAGE_iptables-mod-socket
-@@ -108,16 +108,16 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_NaiveProxy
- 
- config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
+@@ -85,18 +85,18 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
  	bool "Include Shadowsocks Libev Client"
+ 	select PACKAGE_shadowsocks-libev-ss-local
+ 	select PACKAGE_shadowsocks-libev-ss-redir
 -	default y
 +	default n
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server
  	bool "Include Shadowsocks Libev Server"
+ 	select PACKAGE_shadowsocks-libev-ss-server
 -	default y if aarch64||arm||i386||x86_64
 +	default n
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
  	bool "Include Shadowsocks Rust Client"
  	depends on aarch64||arm||i386||mips||mipsel||x86_64
+ 	select PACKAGE_shadowsocks-rust-sslocal
 -	default y if aarch64
 +	default y
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Include Shadowsocks Rust Server"
-@@ -146,7 +146,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan_GO
+@@ -123,12 +123,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
+ config PACKAGE_$(PKG_NAME)_INCLUDE_SingBox
+ 	bool "Include Sing-Box"
+ 	select PACKAGE_sing-box
+-	default y if aarch64||arm||i386||x86_64
++	default y
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan_Plus
  	bool "Include Trojan-Plus"
+ 	select PACKAGE_trojan-plus
 -	default y
 +	default n
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
  	bool "Include tuic-client"
-@@ -159,7 +159,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
- 
+@@ -145,12 +145,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
  config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
  	bool "Include V2ray-Plugin (Shadowsocks Plugin)"
+ 	select PACKAGE_v2ray-plugin
 -	default y if aarch64||arm||i386||x86_64
 +	default n
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
  	bool "Include Xray"
+ 	select PACKAGE_xray-core
+-	default y if aarch64||arm||i386||x86_64
++	default y
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_Xray_Plugin
+ 	bool "Include Xray-Plugin (Shadowsocks Plugin)"
 diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
-index 765c9da..0456262 100644
+index c53fe20..1bb7318 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
 +++ b/luci-app-passwall/root/usr/share/passwall/0_default_config
 @@ -36,8 +36,8 @@ config global_forwarding
@@ -62,9 +67,9 @@ index 765c9da..0456262 100644
 +	option use_nft '1'
 +	option tcp_proxy_way 'tproxy'
  	option ipv6_tproxy '0'
- 	
+ 
  config global_xray
-@@ -60,8 +60,8 @@ config global_rules
+@@ -61,8 +61,8 @@ config global_rules
  	option chnroute_update '1'
  	option chnroute6_update '1'
  	option gfwlist_update '1'

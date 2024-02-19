@@ -1,15 +1,16 @@
 diff --git a/luci-app-passwall2/Makefile b/luci-app-passwall2/Makefile
-index 8eb425a..c8ea2d4 100644
+index 428b224..18eac7f 100644
 --- a/luci-app-passwall2/Makefile
 +++ b/luci-app-passwall2/Makefile
-@@ -25,13 +25,14 @@ PKG_CONFIG_DEPENDS:= \
+@@ -24,6 +24,7 @@ PKG_CONFIG_DEPENDS:= \
+ 	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server \
  	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs \
  	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_SingBox \
- 	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client \
 +	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_Xray \
+ 	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client \
  	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
  
- LUCI_TITLE:=LuCI support for PassWall 2
+@@ -31,7 +32,7 @@ LUCI_TITLE:=LuCI support for PassWall 2
  LUCI_PKGARCH:=all
  LUCI_DEPENDS:=+coreutils +coreutils-base64 +coreutils-nohup +curl \
  	+ip-full +libuci-lua +lua +luci-compat +luci-lib-jsonc +resolveip +tcping \
@@ -40,11 +41,19 @@ index 8eb425a..c8ea2d4 100644
  	bool "Include Shadowsocks Rust Client"
  	depends on aarch64||arm||i386||mips||mipsel||x86_64
 -	default y if aarch64
-+	default y 
++	default y
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Include Shadowsocks Rust Server"
-@@ -142,9 +144,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
+@@ -135,16 +137,20 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_SingBox
+ 	bool "Include Sing-Box"
+-	default y if aarch64||arm||i386||x86_64
++	default y
+ 
+ config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
+ 	bool "Include tuic-client"
  	depends on aarch64||arm||i386||x86_64
  	default n
  
@@ -60,7 +69,7 @@ index 8eb425a..c8ea2d4 100644
  endmenu
  endef
 diff --git a/luci-app-passwall2/root/usr/share/passwall2/0_default_config b/luci-app-passwall2/root/usr/share/passwall2/0_default_config
-index 41b0634..2a2e1ce 100644
+index 9547718..8a212ae 100644
 --- a/luci-app-passwall2/root/usr/share/passwall2/0_default_config
 +++ b/luci-app-passwall2/root/usr/share/passwall2/0_default_config
 @@ -30,8 +30,8 @@ config global_forwarding
