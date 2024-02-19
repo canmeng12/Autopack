@@ -1,7 +1,7 @@
 diff --git a/packages/cpufreq/Makefile b/packages/cpufreq/Makefile
 index c71f1f3..60c57ca 100644
---- a/cpufreq/Makefile
-+++ b/cpufreq/Makefile
+--- a/packages/cpufreq/Makefile
++++ b/packages/cpufreq/Makefile
 @@ -11,7 +11,7 @@ include $(INCLUDE_DIR)/package.mk
  
  define Package/cpufreq
@@ -13,8 +13,8 @@ index c71f1f3..60c57ca 100644
  
 diff --git a/packages/cpufreq/files/cpufreq.config b/packages/cpufreq/files/cpufreq.config
 index 9004f1b..b65d234 100644
---- a/cpufreq/files/cpufreq.config
-+++ b/cpufreq/files/cpufreq.config
+--- a/packages/cpufreq/files/cpufreq.config
++++ b/packages/cpufreq/files/cpufreq.config
 @@ -1,5 +1,10 @@
  
  config settings 'cpufreq'
@@ -28,8 +28,8 @@ index 9004f1b..b65d234 100644
  
 diff --git a/packages/cpufreq/files/cpufreq.uci b/packages/cpufreq/files/cpufreq.uci
 index 4ee49c9..3bef546 100644
---- a/cpufreq/files/cpufreq.uci
-+++ b/cpufreq/files/cpufreq.uci
+--- a/packages/cpufreq/files/cpufreq.uci
++++ b/packages/cpufreq/files/cpufreq.uci
 @@ -45,12 +45,12 @@ case "$DISTRIB_TARGET" in
  			uci_write_config 6 schedutil 816000 2208000
  		elif echo "$CPU_POLICYS" | grep -q "4"; then
