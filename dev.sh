@@ -47,7 +47,7 @@ rm -rf packages1
 
 #ssrplus
 
-git clone --depth 1 https://github.com/fw876/helloworld -b main && mv -n helloworld/luci-app-ssr-plus ./ && mv -n helloworld/{lua-neturl,shadow-tls} ./packages/
+git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci-app-ssr-plus ./ && mv -n helloworld/{lua-neturl,shadow-tls} ./packages/
 rm -rf helloworld
 
 #文件传输,访客网络，释放内存，IP/MAC绑定

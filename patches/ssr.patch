@@ -1,13 +1,9 @@
 diff --git a/luci-app-ssr-plus/Makefile b/luci-app-ssr-plus/Makefile
-index 38a3d7e..e983bfd 100644
+index 38a3d7e..747bf98 100644
 --- a/luci-app-ssr-plus/Makefile
 +++ b/luci-app-ssr-plus/Makefile
-@@ -64,10 +64,11 @@ LUCI_DEPENDS:= \
- define Package/$(PKG_NAME)/config
- select PACKAGE_luci-lib-ipkg if PACKAGE_$(PKG_NAME)
+@@ -66,8 +66,7 @@ select PACKAGE_luci-lib-ipkg if PACKAGE_$(PKG_NAME)
  
-+menu "Configuration"
-+
  choice
  	prompt "Shadowsocks Client Selection"
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client if aarch64 || x86_64
@@ -16,8 +12,17 @@ index 38a3d7e..e983bfd 100644
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Client
  	bool "None"
-@@ -83,9 +84,7 @@ endchoice
+@@ -77,15 +76,14 @@ choice
  
+ 	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
+ 	bool "Shadowsocks-rust"
+-	depends on aarch64||arm||i386||mips||mipsel||x86_64
+-	depends on !(TARGET_x86_geode||TARGET_x86_legacy)
++
+ endchoice
+ 
++menu "Configuration"
++
  choice
  	prompt "Shadowsocks Server Selection"
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server if aarch64
@@ -27,7 +32,13 @@ index 38a3d7e..e983bfd 100644
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
  	bool "None"
-@@ -101,8 +100,7 @@ endchoice
+@@ -95,14 +93,11 @@ choice
+ 
+ 	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
+ 	bool "Shadowsocks-rust"
+-	depends on aarch64||arm||i386||mips||mipsel||x86_64
+-	depends on !(TARGET_x86_geode||TARGET_x86_legacy)
+ endchoice
  
  choice
  	prompt "V2ray-core Selection"
@@ -37,7 +48,7 @@ index 38a3d7e..e983bfd 100644
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_NONE_V2RAY
  	bool "None"
-@@ -174,12 +172,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
+@@ -174,12 +169,14 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server
  	bool "Include ShadowsocksR Libev Server"
@@ -48,22 +59,8 @@ index 38a3d7e..e983bfd 100644
  	bool "Include Trojan"
  	select PACKAGE_$(PKG_NAME)_INCLUDE_IPT2Socks
  	default n
++
 +endmenu
  endef
  
  define Package/$(PKG_NAME)/conffiles
-
-diff --git a/luci-app-ssr-plus/root/etc/init.d/shadowsocksr b/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
-index 2415b62..23d3897 100755
---- a/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
-+++ b/luci-app-ssr-plus/root/etc/init.d/shadowsocksr
-@@ -1050,6 +1050,9 @@ start() {
- 	echolog "----------start------------"
- 	mkdir -p /var/run /var/lock /var/log /tmp/dnsmasq.d $TMP_BIN_PATH $TMP_DNSMASQ_PATH
- 	echo "conf-dir=${TMP_DNSMASQ_PATH}" >"/tmp/dnsmasq.d/dnsmasq-ssrplus.conf"
-+	if [ "$(uci_get_by_type global pdnsd_enable 0)" == "3" ]; then
-+		[ -z "$(opkg status mosdns 2>/dev/null | grep 'Status' | awk -F ': ' '{print $2}' 2>/dev/null)" ] && echolog "依赖 mosdns未安装..."
-+	fi
- 	if load_config; then
- 		Start_Run
- 		start_rules
