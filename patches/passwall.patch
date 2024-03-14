@@ -1,8 +1,8 @@
 diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
-index 7befa19..4d78558 100644
+index f70d1b5..6f3181d 100644
 --- a/luci-app-passwall/Makefile
 +++ b/luci-app-passwall/Makefile
-@@ -85,18 +85,18 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
+@@ -83,19 +83,18 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
  	bool "Include Shadowsocks Libev Client"
  	select PACKAGE_shadowsocks-libev-ss-local
  	select PACKAGE_shadowsocks-libev-ss-redir
@@ -20,16 +20,17 @@ index 7befa19..4d78558 100644
  	depends on aarch64||arm||i386||mips||mipsel||x86_64
  	select PACKAGE_shadowsocks-rust-sslocal
 -	default y if aarch64
-+	default y
- 
+-
++	default n
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Include Shadowsocks Rust Server"
-@@ -123,12 +123,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
+ 	depends on aarch64||arm||i386||mips||mipsel||x86_64
+@@ -121,14 +120,14 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
  config PACKAGE_$(PKG_NAME)_INCLUDE_SingBox
  	bool "Include Sing-Box"
  	select PACKAGE_sing-box
 -	default y if aarch64||arm||i386||x86_64
-+	default y
++	default n
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan_Plus
  	bool "Include Trojan-Plus"
@@ -37,9 +38,12 @@ index 7befa19..4d78558 100644
 -	default y
 +	default n
  
- config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
+-config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
++config PACKA GE_$(PKG_NAME)_INCLUDE_tuic_client
  	bool "Include tuic-client"
-@@ -145,12 +145,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
+ 	depends on aarch64||arm||i386||x86_64
+ 	select PACKAGE_tuic-client
+@@ -143,13 +142,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
  config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
  	bool "Include V2ray-Plugin (Shadowsocks Plugin)"
  	select PACKAGE_v2ray-plugin
@@ -49,11 +53,13 @@ index 7befa19..4d78558 100644
  config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
  	bool "Include Xray"
  	select PACKAGE_xray-core
+ 	select PACKAGE_unzip
 -	default y if aarch64||arm||i386||x86_64
 +	default y
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Xray_Plugin
  	bool "Include Xray-Plugin (Shadowsocks Plugin)"
+
 diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
 index c53fe20..1bb7318 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
