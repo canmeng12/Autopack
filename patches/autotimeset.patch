@@ -1,19 +1,22 @@
 diff --git a/luci-app-autotimeset/luasrc/controller/autotimeset.lua b/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-index 1f5138e..b35434e 100644
+index da33581..c1f9321 100644
 --- a/luci-app-autotimeset/luasrc/controller/autotimeset.lua
 +++ b/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-@@ -5,12 +5,11 @@ function index()
+@@ -5,14 +5,14 @@ function index()
  	if not nixio.fs.access("/etc/config/autotimeset") then
  		return
  	end
 -        entry({"admin", "control"}, firstchild(), "Control", 44).dependent = false
--        entry({"admin", "control", "autotimeset"}, alias("admin", "control", "autotimeset", "base"), _("Scheduled Setting"), 20).dependent = true
+-        local e = entry({"admin", "control", "autotimeset"}, alias("admin", "control", "autotimeset", "base"), _("Scheduled Setting"), 20)
++        entry({"admin", "services"}, firstchild(), "services", 44).dependent = false
++        local e = entry({"admin", "services", "autotimeset"}, alias("admin", "services", "autotimeset", "base"), _("Scheduled Setting"), 20)
+ 	e.dependent = false
+ 	e.acl_depends = { "luci-app-autotimeset" }
 -        entry({"admin", "control", "autotimeset", "base"}, cbi("autotimeset/base"),  _("Scheduled Setting"), 1).leaf = true
 -        entry({"admin", "control", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 2).leaf = true
 -        entry({"admin","control","autotimeset","dellog"},call("dellog"))
 -        entry({"admin","control","autotimeset","getlog"},call("getlog"))
-+        entry({"admin", "services", "autotimeset"}, alias("admin", "services", "autotimeset", "base"), _("time Setting"), 20).dependent = true
-+        entry({"admin", "services", "autotimeset", "base"}, cbi("autotimeset/base"),  _("time Setting"), 1).leaf = true
++        entry({"admin", "services", "autotimeset", "base"}, cbi("autotimeset/base"),  _("Scheduled Setting"), 1).leaf = true
 +        entry({"admin", "services", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 2).leaf = true
 +        entry({"admin","services","autotimeset","dellog"},call("dellog"))
 +        entry({"admin","services","autotimeset","getlog"},call("getlog"))
@@ -43,20 +46,19 @@ index 0f1b859..9fe1437 100644
  		var lv=document.getElementById('cbid.logview.1.conf');
  		lv.innerHTML=""
 diff --git a/luci-app-autotimeset/po/zh-cn/autotimeset.po b/luci-app-autotimeset/po/zh-cn/autotimeset.po
-index ebb4ecc..36cd18a 100644
+index 9b322f0..1a79a07 100644
 --- a/luci-app-autotimeset/po/zh-cn/autotimeset.po
 +++ b/luci-app-autotimeset/po/zh-cn/autotimeset.po
-@@ -8,8 +8,11 @@ msgstr "N1-N5连续，N1,N3,N5不连续，*/N表示每N小时或每N分钟。月
- msgid "Scheduled task/startup task settings"
- msgstr "定时执行任务/开机启动任务设置"
+@@ -11,6 +11,12 @@ msgstr "定时执行任务/开机启动任务设置"
+ msgid "Scheduled Setting"
+ msgstr "任务设置"
  
--msgid "Scheduled Setting"
--msgstr "任务设置"
 +msgid "Clear Log"
 +msgstr "清理log"
 +
 +msgid "time Setting"
 +msgstr "定时设置"
- 
++
  msgid "Test/Verify Settings"
  msgstr "测试/验证设置"
+ 
