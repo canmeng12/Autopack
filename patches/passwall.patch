@@ -21,7 +21,7 @@ index f70d1b5..6f3181d 100644
  	select PACKAGE_shadowsocks-rust-sslocal
 -	default y if aarch64
 -
-+	default n
++	default y
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Include Shadowsocks Rust Server"
  	depends on aarch64||arm||i386||mips||mipsel||x86_64
@@ -30,7 +30,7 @@ index f70d1b5..6f3181d 100644
  	bool "Include Sing-Box"
  	select PACKAGE_sing-box
 -	default y if aarch64||arm||i386||x86_64
-+	default n
++	default y
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan_Plus
  	bool "Include Trojan-Plus"
