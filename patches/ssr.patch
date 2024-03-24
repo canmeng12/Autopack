@@ -1,18 +1,20 @@
 diff --git a/luci-app-ssr-plus/Makefile b/luci-app-ssr-plus/Makefile
-index 38a3d7e..747bf98 100644
+index 82e06b3..68a0bf5 100644
 --- a/luci-app-ssr-plus/Makefile
 +++ b/luci-app-ssr-plus/Makefile
-@@ -66,8 +66,7 @@ select PACKAGE_luci-lib-ipkg if PACKAGE_$(PKG_NAME)
+@@ -83,9 +83,8 @@ endchoice
  
  choice
  	prompt "Shadowsocks Client Selection"
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client if aarch64 || x86_64
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
+-
 +	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
- 
++	
  	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Client
  	bool "None"
-@@ -77,15 +76,14 @@ choice
+ 
+@@ -94,14 +93,14 @@ choice
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
  	bool "Shadowsocks-rust"
@@ -27,12 +29,11 @@ index 38a3d7e..747bf98 100644
  	prompt "Shadowsocks Server Selection"
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server if aarch64
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server if i386||x86_64||arm
--	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
 +	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
+ 	default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_NONE_Server
- 	bool "None"
-@@ -95,14 +93,11 @@ choice
+@@ -112,13 +111,12 @@ choice
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Shadowsocks-rust"
@@ -43,12 +44,12 @@ index 38a3d7e..747bf98 100644
  choice
  	prompt "V2ray-core Selection"
 -	default PACKAGE_$(PKG_NAME)_INCLUDE_Xray if aarch64||arm||i386||x86_64
--	default PACKAGE_$(PKG_NAME)_INCLUDE_NONE_V2RAY
++	default PACKAGE_$(PKG_NAME)_INCLUDE_Xray
 +	default PACKAGE_$(PKG_NAME)_INCLUDE_V2ray
+ 	default PACKAGE_$(PKG_NAME)_INCLUDE_NONE_V2RAY
  
  	config PACKAGE_$(PKG_NAME)_INCLUDE_NONE_V2RAY
- 	bool "None"
-@@ -174,12 +169,14 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
+@@ -191,13 +189,14 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server
  	bool "Include ShadowsocksR Libev Server"
@@ -59,8 +60,8 @@ index 38a3d7e..747bf98 100644
  	bool "Include Trojan"
  	select PACKAGE_$(PKG_NAME)_INCLUDE_IPT2Socks
  	default n
-+
+ 
 +endmenu
  endef
  
- define Package/$(PKG_NAME)/conffiles
+ 
