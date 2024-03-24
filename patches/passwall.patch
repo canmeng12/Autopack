@@ -61,7 +61,7 @@ diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-a
 index c53fe20..1bb7318 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
 +++ b/luci-app-passwall/root/usr/share/passwall/0_default_config
-@@ -36,8 +36,8 @@ config global_forwarding
+@@ -40,8 +40,8 @@ config global_forwarding
  	option tcp_redir_ports '22,25,53,143,465,587,853,993,995,80,443'
  	option udp_redir_ports '1:65535'
  	option accept_icmp '0'
@@ -72,7 +72,7 @@ index c53fe20..1bb7318 100644
  	option ipv6_tproxy '0'
  
  config global_xray
-@@ -61,8 +61,8 @@ config global_rules
+@@ -65,8 +65,8 @@ config global_rules
  	option chnroute_update '1'
  	option chnroute6_update '1'
  	option gfwlist_update '1'
