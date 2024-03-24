@@ -38,7 +38,7 @@ index f70d1b5..6f3181d 100644
 -	default y
 +	default n
  
-config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
+ config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
  	bool "Include tuic-client"
 @@ -143,13 +142,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
  config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
