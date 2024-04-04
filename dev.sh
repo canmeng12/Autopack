@@ -89,6 +89,7 @@ git clone --depth 1 https://github.com/openwrt/packages packages13 && mv -n pack
 rm -rf packages13
 
 cd packages
+git clone --depth 1 https://github.com/sbwml/packages_new_nat6
 git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadowsocksr-libev,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns}
 #svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
