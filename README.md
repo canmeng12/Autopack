@@ -1,3 +1,3 @@
 # packages
 
-openwrt-packages自动更新
+packages   自动更新
