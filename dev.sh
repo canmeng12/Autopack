@@ -88,7 +88,7 @@ sed -i \
 git clone --depth 1 https://github.com/openwrt/packages packages13 && mv -n packages13/net/v2ray-core/test.sh ./packages/v2ray-core/
 rm -rf packages13
 
-#git clone --depth 1 https://github.com/sbwml/packages_new_nat6 ./packages/new_nat6
+git clone --depth 1 https://github.com/sbwml/packages_new_nat6 new_nat6  && mv -n new_nat6 ./packages/
 
 cd packages
 git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadowsocksr-libev,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns}
