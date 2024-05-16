@@ -88,18 +88,27 @@ sed -i \
 git clone --depth 1 https://github.com/openwrt/packages packages13 && mv -n packages13/net/v2ray-core/test.sh ./packages/v2ray-core/
 rm -rf packages13
 
-git clone --depth 1 https://github.com/sbwml/packages_new_nat6 new_nat6  && mv -n new_nat6 ./packages/
+
 
 cd packages
 git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadowsocksr-libev,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns}
 #svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
 # sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile
+git clone --depth 1 https://github.com/sbwml/packages_new_nat6 new_nat6
+
 
 sed -i \
     -e 's?include \.\./\.\./\(lang\|devel\)?include $(TOPDIR)/feeds/packages/\1?' \
     -e 's?\.\./\.\./luci.mk?$(TOPDIR)/feeds/luci/luci.mk?' \
     */Makefile
+
+rm -rf ./*/.git &
+rm -f ./*/.gitattributes &
+rm -rf ./*/.svn &
+rm -rf ./*/.github &
+rm -rf ./*/.gitignore
+    
 cd ..
 
 for e in $(ls -d luci-*/po); do
