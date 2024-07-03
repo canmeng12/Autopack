@@ -62,7 +62,7 @@ rm -rf passwall1
 #sed -i '92 s/n/y/' ./luci-app-passwall/Makefile
 #sed -i '148 s/n /y /' ./luci-app-passwall/Makefile
 
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,tuic-client,v2ray-core,ipt2socks,ssocks} ./packages/
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
 rm -rf packages1
 
 git_sparse_clone master "https://github.com/immortalwrt/luci" "imm" applications/{luci-app-cpulimit,luci-app-webadmin,luci-app-cpufreq}
@@ -147,7 +147,7 @@ git clone --depth 1 https://github.com/openwrt/packages packages13 && mv -n pack
 rm -rf packages13
 
 cd packages
-git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,cdnspeedtest,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,sagernet-core,shadowsocksr-libev,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns} utils/cpulimit
+git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,cdnspeedtest,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,sagernet-core,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns} utils/cpulimit
 #svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
 # sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile
