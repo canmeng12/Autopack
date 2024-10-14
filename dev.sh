@@ -102,27 +102,26 @@ sed -i \
     -e 's?include \.\./\.\./\(lang\|devel\)?include $(TOPDIR)/feeds/packages/\1?' \
     -e 's?\.\./\.\./luci.mk?$(TOPDIR)/feeds/luci/luci.mk?' \
     */Makefile
-
-rm -rf ./*/.git &
-rm -f ./*/.gitattributes &
-rm -rf ./*/.svn &
-rm -rf ./*/.github &
-rm -rf ./*/.gitignore
-    
 cd ..
 
+# 遍历所有以 luci- 开头的目录下的 po 文件夹
 for e in $(ls -d luci-*/po); do
+    # 如果存在 zh-cn 目录且不存在 zh_Hans 目录，则创建符号链接
     if [[ -d $e/zh-cn && ! -d $e/zh_Hans ]]; then
-        ln -s zh-cn $e/zh_Hans 2>/dev/null
+        ln -s zh-cn "$e/zh_Hans" 2>/dev/null
+    # 如果存在 zh_Hans 目录且不存在 zh-cn 目录，则创建符号链接
     elif [[ -d $e/zh_Hans && ! -d $e/zh-cn ]]; then
-        ln -s zh_Hans $e/zh-cn 2>/dev/null
+        ln -s zh_Hans "$e/zh-cn" 2>/dev/null
     fi
 done
 
-rm -rf ./*/.git &
-rm -f ./*/.gitattributes &
-rm -rf ./*/.svn &
-rm -rf ./*/.github &
-rm -rf ./*/.gitignore
+# 查找并删除所有目录中的 .git、.svn、.github 和 .gitignore 文件
+find . -type d -name '.git' -exec rm -rf {} +
+find . -type d -name '.svn' -exec rm -rf {} +
+find . -type d -name '.github' -exec rm -rf {} +
+find . -type f -name '.gitignore' -exec rm -f {} +
+
+# 如果你希望同时删除 .gitattributes 文件，也可以这样做：
+find . -type f -name '.gitattributes' -exec rm -f {} +
 
 exit 0
