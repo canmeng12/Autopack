@@ -25,7 +25,7 @@ git clone --depth 1 https://github.com/sirpdboy/luci-app-netdata
 git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset
 
 #adguardhome
-git clone --depth 1 https://github.com/kiddin9/openwrt-packages packages12 && mv -n packages12/adguardhome ./packages/
+git clone --depth 1 https://github.com/kiddin9/kwrt-packages packages12 && mv -n packages12/adguardhome ./packages/
 rm -rf packages12
 git clone --depth 1 https://github.com/Hyy2001X/AutoBuild-Packages packages12 && mv -n packages12/luci-app-adguardhome ./ 
 rm -rf packages12
