@@ -13,8 +13,6 @@ on:
     types: started
   repository_dispatch:
   workflow_dispatch:
-  
-permissions: read-all
 
 jobs:
   build:
