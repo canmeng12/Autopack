@@ -115,13 +115,13 @@ for e in $(ls -d luci-*/po); do
     fi
 done
 
-# 查找并删除所有目录中的 .git、.svn、.github 和 .gitignore 文件
-find . -type d -name '.git' -exec rm -rf {} +
-find . -type d -name '.svn' -exec rm -rf {} +
-find . -type d -name '.github' -exec rm -rf {} +
-find . -type f -name '.gitignore' -exec rm -f {} +
+git rm --cached packages/lua-maxminddb
 
-# 如果你希望同时删除 .gitattributes 文件，也可以这样做：
-find . -type f -name '.gitattributes' -exec rm -f {} +
+rm -rf cm
+rm -rf ./*/.git &
+rm -rf ./*/.gitattributes &
+rm -rf ./*/.svn &
+rm -rf ./*/.github &
+rm -rf ./*/.gitignore
 
 exit 0
