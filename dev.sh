@@ -98,10 +98,19 @@ git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn
 git clone --depth 1 https://github.com/sbwml/packages_new_nat6 new_nat6
 
 
+
 sed -i \
     -e 's?include \.\./\.\./\(lang\|devel\)?include $(TOPDIR)/feeds/packages/\1?' \
     -e 's?\.\./\.\./luci.mk?$(TOPDIR)/feeds/luci/luci.mk?' \
     */Makefile
+
+
+rm -rf ./*/.git &
+rm -f ./*/.gitattributes &
+rm -rf ./*/.svn &
+rm -rf ./*/.github &
+rm -rf ./*/.gitignore
+    
 cd ..
 
 # 遍历所有以 luci- 开头的目录下的 po 文件夹
