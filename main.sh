@@ -27,7 +27,11 @@ function mvdir() {
 mkdir -p packages
 
 #应用过滤
-git clone --depth 1 https://github.com/destan19/OpenAppFilter && mvdir OpenAppFilter && mv -n oaf ./packages && mv -n open-app-filter ./packages
+git clone --depth 1 https://github.com/destan19/OpenAppFilter && \
+mv OpenAppFilter/luci-app-oaf ./ && \
+mv OpenAppFilter/oaf ./packages && \
+mv OpenAppFilter/open-app-filter ./packages && \
+rm -rf OpenAppFilter
 
 #系统高级设置
 git clone --depth 1 https://github.com/sirpdboy/luci-app-advanced

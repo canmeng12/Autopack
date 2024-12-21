@@ -61,9 +61,13 @@ jobs:
       - name: 补丁
         run: |
           if [ "${{ matrix.target }}" = "dev" ]; then
-              find "patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d $GITHUB_WORKSPACE/${{matrix.target}} -p1 -E --forward --no-backup-if-mismatch"
+              find "patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "
+                  cat '%' | patch -d $GITHUB_WORKSPACE/${{matrix.target}} -p1 -E --forward --no-backup-if-mismatch || {
+                      echo '补丁应用失败: %'
+                      exit 1
+                  }
+             "
           fi
-          
 
       - name: 上传包
         env:
