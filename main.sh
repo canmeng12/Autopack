@@ -1,21 +1,29 @@
 #!/bin/bash
+
+# 定义函数：克隆 Git 仓库
 function git_clone() {
-    git clone --depth 1 $1 $2 || true
+    git clone --depth 1 "$1" "$2" || true
 }
+
+# 定义函数：稀疏克隆 Git 仓库
 function git_sparse_clone() {
     branch="$1" rurl="$2" localdir="$3" && shift 3
-    git clone -b $branch --depth 1 --filter=blob:none --sparse $rurl $localdir
-    cd $localdir
+    git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$rurl" "$localdir"
+    cd "$localdir" || exit
     git sparse-checkout init --cone
-    git sparse-checkout set $@
-    mv -n $@ ../
-    cd ..
-    rm -rf $localdir
+    git sparse-checkout set "$@"
+    mv -n "$@" ../
+    cd .. || exit
+    rm -rf "$localdir"
 }
+
+# 定义函数：移动目录
 function mvdir() {
-    mv -n $(find $1/* -maxdepth 0 -type d) ./
-    rm -rf $1
+    mv -n "$(find "$1"/* -maxdepth 0 -type d)" ./
+    rm -rf "$1"
 }
+
+# 创建 packages 目录
 mkdir -p packages
 
 #应用过滤
@@ -59,8 +67,6 @@ rm -rf passwall2
 
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall1 && mv -n passwall1/luci-app-passwall ./
 rm -rf passwall1
-#sed -i '92 s/n/y/' ./luci-app-passwall/Makefile
-#sed -i '148 s/n /y /' ./luci-app-passwall/Makefile
 
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
 rm -rf packages1
