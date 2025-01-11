@@ -20,12 +20,11 @@ index 507ab25..44abdb1 100755
  	[ -f $configpath ] && chmod 777 $configpath
  	if [ -n "$hashpass" ]; then
  		config_editor "users.password" "$hashpass" "$configpath"
-
 diff --git a/packages/adguardhome/Makefile b/packages/adguardhome/Makefile
-index d8961e3..f24a435 100644
+index ff603d4..c4f64e3 100644
 --- a/packages/adguardhome/Makefile
 +++ b/packages/adguardhome/Makefile
-@@ -47,7 +47,7 @@ define Package/adguardhome
+@@ -45,7 +45,7 @@ define Package/adguardhome
  endef
  
  define Package/adguardhome/conffiles
@@ -33,4 +32,4 @@ index d8961e3..f24a435 100644
 +/etc/config/adguardhome.yaml
  /etc/config/adguardhome
  endef
-
+ 

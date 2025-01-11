@@ -1,8 +1,8 @@
 diff --git a/luci-app-passwall/Makefile b/luci-app-passwall/Makefile
-index f70d1b5..6f3181d 100644
+index f0c9835..6887396 100644
 --- a/luci-app-passwall/Makefile
 +++ b/luci-app-passwall/Makefile
-@@ -83,19 +83,18 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
+@@ -89,18 +89,18 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
  	bool "Include Shadowsocks Libev Client"
  	select PACKAGE_shadowsocks-libev-ss-local
  	select PACKAGE_shadowsocks-libev-ss-redir
@@ -20,12 +20,11 @@ index f70d1b5..6f3181d 100644
  	depends on aarch64||arm||i386||mips||mipsel||x86_64
  	select PACKAGE_shadowsocks-rust-sslocal
 -	default y if aarch64
--
 +	default y
+ 
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Include Shadowsocks Rust Server"
- 	depends on aarch64||arm||i386||mips||mipsel||x86_64
-@@ -121,12 +120,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
+@@ -127,12 +127,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
  config PACKAGE_$(PKG_NAME)_INCLUDE_SingBox
  	bool "Include Sing-Box"
  	select PACKAGE_sing-box
@@ -40,7 +39,7 @@ index f70d1b5..6f3181d 100644
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
  	bool "Include tuic-client"
-@@ -143,13 +142,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
+@@ -149,13 +149,13 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Geodata
  config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
  	bool "Include V2ray-Plugin (Shadowsocks Plugin)"
  	select PACKAGE_v2ray-plugin
@@ -56,12 +55,11 @@ index f70d1b5..6f3181d 100644
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Xray_Plugin
  	bool "Include Xray-Plugin (Shadowsocks Plugin)"
-
 diff --git a/luci-app-passwall/root/usr/share/passwall/0_default_config b/luci-app-passwall/root/usr/share/passwall/0_default_config
-index c53fe20..1bb7318 100644
+index 44e540d..1fe450a 100644
 --- a/luci-app-passwall/root/usr/share/passwall/0_default_config
 +++ b/luci-app-passwall/root/usr/share/passwall/0_default_config
-@@ -40,8 +40,8 @@ config global_forwarding
+@@ -42,8 +42,8 @@ config global_forwarding
  	option tcp_redir_ports '22,25,53,143,465,587,853,993,995,80,443'
  	option udp_redir_ports '1:65535'
  	option accept_icmp '0'
@@ -72,7 +70,7 @@ index c53fe20..1bb7318 100644
  	option ipv6_tproxy '0'
  
  config global_xray
-@@ -65,8 +65,8 @@ config global_rules
+@@ -66,8 +66,8 @@ config global_rules
  	option chnroute_update '1'
  	option chnroute6_update '1'
  	option gfwlist_update '1'

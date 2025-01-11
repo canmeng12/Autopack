@@ -1,28 +1,30 @@
 diff --git a/luci-app-autotimeset/luasrc/controller/autotimeset.lua b/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-index da33581..c1f9321 100644
+index 2f3fd8c..383f02f 100644
 --- a/luci-app-autotimeset/luasrc/controller/autotimeset.lua
 +++ b/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-@@ -5,14 +5,14 @@ function index()
+@@ -5,15 +5,15 @@ function index()
  	if not nixio.fs.access("/etc/config/autotimeset") then
  		return
  	end
 -        entry({"admin", "control"}, firstchild(), "Control", 44).dependent = false
--        local e = entry({"admin", "control", "autotimeset"}, alias("admin", "control", "autotimeset", "base"), _("Scheduled Setting"), 20)
+-        local e = entry({"admin", "control", "autotimeset"}, alias("admin", "control", "autotimeset", "scheduledtask"), _("Scheduled Setting"), 20)
 +        entry({"admin", "services"}, firstchild(), "services", 44).dependent = false
-+        local e = entry({"admin", "services", "autotimeset"}, alias("admin", "services", "autotimeset", "base"), _("Scheduled Setting"), 20)
++        local e = entry({"admin", "services", "autotimeset"}, alias("admin", "services", "autotimeset", "scheduledtask"), _("Scheduled Setting"), 20)
  	e.dependent = false
  	e.acl_depends = { "luci-app-autotimeset" }
--        entry({"admin", "control", "autotimeset", "base"}, cbi("autotimeset/base"),  _("Scheduled Setting"), 1).leaf = true
--        entry({"admin", "control", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 2).leaf = true
+-        entry({"admin", "control", "autotimeset", "scheduledtask"}, cbi("autotimeset/scheduledtask"),  _("Scheduled task"), 10).leaf = true
+-        entry({"admin", "control", "autotimeset", "startuptask"}, cbi("autotimeset/startuptask"),  _("Startup task"), 20).leaf = true
+-        entry({"admin", "control", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 30).leaf = true
 -        entry({"admin","control","autotimeset","dellog"},call("dellog"))
 -        entry({"admin","control","autotimeset","getlog"},call("getlog"))
-+        entry({"admin", "services", "autotimeset", "base"}, cbi("autotimeset/base"),  _("Scheduled Setting"), 1).leaf = true
-+        entry({"admin", "services", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 2).leaf = true
++        entry({"admin", "services", "autotimeset", "scheduledtask"}, cbi("autotimeset/scheduledtask"),  _("Scheduled task"), 10).leaf = true
++        entry({"admin", "services", "autotimeset", "startuptask"}, cbi("autotimeset/startuptask"),  _("Startup task"), 20).leaf = true
++        entry({"admin", "services", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 30).leaf = true
 +        entry({"admin","services","autotimeset","dellog"},call("dellog"))
 +        entry({"admin","services","autotimeset","getlog"},call("getlog"))
  end
  
- 
+ function getlog()
 diff --git a/luci-app-autotimeset/luasrc/view/autotimeset/log.htm b/luci-app-autotimeset/luasrc/view/autotimeset/log.htm
 index 0f1b859..9fe1437 100644
 --- a/luci-app-autotimeset/luasrc/view/autotimeset/log.htm
@@ -46,35 +48,30 @@ index 0f1b859..9fe1437 100644
  		var lv=document.getElementById('cbid.logview.1.conf');
  		lv.innerHTML=""
 diff --git a/luci-app-autotimeset/po/zh-cn/autotimeset.po b/luci-app-autotimeset/po/zh-cn/autotimeset.po
-index 9b322f0..1a79a07 100644
+index 78c0712..3aa2bf0 100644
 --- a/luci-app-autotimeset/po/zh-cn/autotimeset.po
 +++ b/luci-app-autotimeset/po/zh-cn/autotimeset.po
-@@ -11,6 +11,12 @@ msgstr "定时执行任务/开机启动任务设置"
- msgid "Scheduled Setting"
- msgstr "任务设置"
+@@ -107,3 +107,8 @@ msgstr "小时(0~23)"
+ msgid "Minute(0~59)"
+ msgstr "分钟(0~59)"
  
 +msgid "Clear Log"
 +msgstr "清理log"
 +
 +msgid "time Setting"
 +msgstr "定时设置"
-+
- msgid "Test/Verify Settings"
- msgstr "测试/验证设置"
- 
- diff --git a/luci-app-autotimeset/po/zh_Hans/autotimeset.po b/luci-app-autotimeset/po/zh_Hans/autotimeset.po
-index 9b322f0..1a79a07 100644
+\ No newline at end of file
+diff --git a/luci-app-autotimeset/po/zh_Hans/autotimeset.po b/luci-app-autotimeset/po/zh_Hans/autotimeset.po
+index 78c0712..3aa2bf0 100644
 --- a/luci-app-autotimeset/po/zh_Hans/autotimeset.po
 +++ b/luci-app-autotimeset/po/zh_Hans/autotimeset.po
-@@ -11,6 +11,12 @@ msgstr "定时执行任务/开机启动任务设置"
- msgid "Scheduled Setting"
- msgstr "任务设置"
+@@ -107,3 +107,8 @@ msgstr "小时(0~23)"
+ msgid "Minute(0~59)"
+ msgstr "分钟(0~59)"
  
 +msgid "Clear Log"
 +msgstr "清理log"
 +
 +msgid "time Setting"
 +msgstr "定时设置"
-+
- msgid "Test/Verify Settings"
- msgstr "测试/验证设置"
+\ No newline at end of file
