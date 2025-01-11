@@ -13,6 +13,11 @@ on:
     types: started
   repository_dispatch:
   workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
 
 jobs:
   build:
@@ -61,12 +66,13 @@ jobs:
       - name: 补丁
         run: |
           if [ "${{ matrix.target }}" = "dev" ]; then
-              find "patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "
-                  cat '%' | patch -d $GITHUB_WORKSPACE/${{matrix.target}} -p1 -E --forward --no-backup-if-mismatch || {
-                      echo '补丁应用失败: %'
-                      exit 1
-                  }
-             "
+              find "patches" -type f -name '*.patch' -print0 | sort -z | while IFS= read -r -d '' patch_file; do
+                  if patch -d "$GITHUB_WORKSPACE/${{ matrix.target }}" -p1 -E --forward --no-backup-if-mismatch < "$patch_file"; then
+                    echo "成功应用补丁: $patch_file"
+                  else
+                    echo "失败应用补丁: $patch_file"
+                  fi
+              done
           fi
 
       - name: 上传包
