@@ -33,6 +33,10 @@ rm -rf packages12
 #sed -i 's/AdGuardHome.yaml/config\/AdGuardHome.yaml/g' ./*adguardhome/root/etc/config/AdGuardHome
 #sed -i 's/default y/default n/g' ./*adguardhome/Makefile
 
+#lucky
+git clone --depth 1 https://github.com/gdy666/luci-app-lucky lucky && mv -n lucky/luci-app-lucky ./   && mv -n lucky/lucky ./packages/  
+rm -rf lucky
+
 #passwall
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2 passwall2 && mv -n passwall2/luci-app-passwall2 ./
 rm -rf passwall2
