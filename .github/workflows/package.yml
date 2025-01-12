@@ -48,16 +48,38 @@ jobs:
 
       - name: 克隆包
         run: |
-          cd $GITHUB_WORKSPACE
-          chmod +x ${{matrix.target}}.sh
-          git clone https://github.com/canmeng12/packages.git ${{matrix.target}}
-          cd ${{matrix.target}}
+          # 切换到 GitHub 工作区目录
+          cd "$GITHUB_WORKSPACE" || exit 1
+          # 将目标脚本设置为可执行
+          chmod +x "${{matrix.target}}.sh"
+          # 克隆 GitHub 仓库到目标目录
+          git clone https://github.com/canmeng12/packages.git "${{matrix.target}}"
+          # 进入克隆的目标目录
+          cd "${{matrix.target}}" || exit 1
+          # 如果目标是 dev，则检出 dev 分支
           if [ "${{ matrix.target }}" = "dev" ]; then
               git checkout ${{matrix.target}}
           fi
-          git rm -r --cache * >/dev/null 2>&1 &
-          rm -rf `find ./* -maxdepth 0 -type d ! -name "diy"` >/dev/null 2>&1
-          $GITHUB_WORKSPACE/${{matrix.target}}.sh
+          # 返回工作区目录
+          cd ..
+          # 创建并进入 ls 目录
+          mkdir -p ls && cd ls || exit 1
+          # 执行目标脚本
+          "$GITHUB_WORKSPACE/${{matrix.target}}.sh"
+          # 遍历 ls 目录中的所有文件夹并移动到目标目录
+          for dir in */; do
+              # 获取文件夹名称（去掉最后的斜杠）
+              folder_name="${dir%/}"
+              # 如果目标目录中已存在同名文件夹，则删除它
+              target_dir="$GITHUB_WORKSPACE/${{matrix.target}}/$folder_name"
+              [ -d "$target_dir" ] && rm -rf "$target_dir"
+              # 移动文件夹到目标目录
+              mv "$dir" "$GITHUB_WORKSPACE/${{matrix.target}}/"
+          done
+          # 返回工作区目录
+          cd $GITHUB_WORKSPACE/${{matrix.target}}
+          # 删除 ls 文件夹
+          rm -rf ls
 
       - name: 补丁
         run: |
