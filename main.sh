@@ -75,7 +75,7 @@ rm -rf passwall1
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
 rm -rf packages1
 
-git_sparse_clone master "https://github.com/immortalwrt/luci" "imm" applications/{luci-app-cpulimit,luci-app-webadmin,luci-app-cpufreq}
+git_sparse_clone master "https://github.com/immortalwrt/luci" "imm" applications/{luci-app-cpulimit,luci-app-cpufreq}
 
 git clone --depth 1 https://github.com/immortalwrt/immortalwrt && mv -n immortalwrt/package/emortal/cpufreq ./packages/
 rm -rf immortalwrt
@@ -97,7 +97,7 @@ rm -rf v2raya-openwrt
 
 #文件传输,访客网络，释放内存，IP/MAC绑定,实时流量监测,docke
 
-git clone --depth 1 https://github.com/coolsnowwolf/luci && mv -n luci/applications/{luci-app-filetransfer,luci-app-guest-wifi,luci-app-ramfree,luci-app-arpbind,luci-app-wrtbwmon,luci-app-dockerman} ./ && mv -n luci/libs/luci-lib-fs ./packages/
+git clone --depth 1 https://github.com/coolsnowwolf/luci && mv -n luci/applications/{luci-app-filetransfer,luci-app-guest-wifi,luci-app-webadmin,luci-app-ramfree,luci-app-arpbind,luci-app-wrtbwmon,luci-app-dockerman} ./ && mv -n luci/libs/luci-lib-fs ./packages/
 rm -rf luci
 
 #sed -i 's/msgstr"/msgstr "/g' ./*guest-wifi/po/zh-cn/guest-wifi.po
@@ -121,6 +121,8 @@ rm -rf openwrt-packages
 git clone --depth 1 https://github.com/vernesong/OpenClash -b dev && mv -n OpenClash/luci-app-openclash ./
 rm -rf OpenClash
 #sed -i 's/+libcap /+libcap +libcap-bin /g' luci-app-openclash/Makefile
+
+git clone --depth 1 https://github.com/immortalwrt/homeproxy luci-app-homeproxy
 
 #磁盘管理
 

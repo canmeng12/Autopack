@@ -62,8 +62,8 @@ jobs:
           fi
           # 返回工作区目录
           cd ..
-          # 创建并进入 ls 目录
-          mkdir -p ls && cd ls || exit 1
+          # 创建并进入 lxs 目录
+          mkdir -p lxs && cd lxs || exit 1
           # 执行目标脚本
           "$GITHUB_WORKSPACE/${{matrix.target}}.sh"
           # 遍历 ls 目录中的所有文件夹并移动到目标目录
@@ -79,7 +79,7 @@ jobs:
           # 返回工作区目录
           cd $GITHUB_WORKSPACE/${{matrix.target}}
           # 删除 ls 文件夹
-          rm -rf ls
+          rm -rf lxs
 
       - name: 补丁
         run: |
