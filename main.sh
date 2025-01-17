@@ -1,28 +1,5 @@
 #!/bin/bash
 
-# 定义函数：克隆 Git 仓库
-function git_clone() {
-    git clone --depth 1 "$1" "$2" || true
-}
-
-# 定义函数：稀疏克隆 Git 仓库
-function git_sparse_clone() {
-    branch="$1" rurl="$2" localdir="$3" && shift 3
-    git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$rurl" "$localdir"
-    cd "$localdir" || exit
-    git sparse-checkout init --cone
-    git sparse-checkout set "$@"
-    mv -n "$@" ../
-    cd .. || exit
-    rm -rf "$localdir"
-}
-
-# 定义函数：移动目录
-function mvdir() {
-    mv -n "$(find "$1"/* -maxdepth 0 -type d)" ./
-    rm -rf "$1"
-}
-
 # 创建 packages 目录
 mkdir -p packages
 
@@ -72,7 +49,7 @@ rm -rf passwall2
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall1 && mv -n passwall1/luci-app-passwall ./
 rm -rf passwall1
 
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,trojan-plus,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
 rm -rf packages1
 
 git_sparse_clone master "https://github.com/immortalwrt/luci" "imm" applications/{luci-app-cpulimit,luci-app-cpufreq}
