@@ -30,7 +30,7 @@ rm -rf passwall1
 #sed -i '92 s/n/y/' ./luci-app-passwall/Makefile
 #sed -i '148 s/n /y /' ./luci-app-passwall/Makefile
 
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,trojan-plus,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,trojan-plus,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev,geoview} ./packages/
 rm -rf packages1
 
 #ssrplus

@@ -49,7 +49,7 @@ rm -rf passwall2
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall1 && mv -n passwall1/luci-app-passwall ./
 rm -rf passwall1
 
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,trojan-plus,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev} ./packages/
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,trojan-plus,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev,geoview} ./packages/
 rm -rf packages1
 
 git_sparse_clone master "https://github.com/immortalwrt/luci" "imm" applications/{luci-app-cpulimit,luci-app-cpufreq}
