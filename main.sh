@@ -58,7 +58,7 @@ git clone --depth 1 https://github.com/immortalwrt/immortalwrt && mv -n immortal
 rm -rf immortalwrt
 
 #ssrplus
-git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci-app-ssr-plus ./ && mv -n helloworld/{lua-neturl,shadow-tls} ./packages/
+git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci-app-ssr-plus ./ && mv -n helloworld/{lua-neturl,shadow-tls,dns2socks-rust} ./packages/
 rm -rf helloworld
 
 #vssr
