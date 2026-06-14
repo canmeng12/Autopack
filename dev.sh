@@ -38,7 +38,7 @@ git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci
 rm -rf helloworld
 
 #文件传输,访客网络，释放内存，IP/MAC绑定
-git_sparse_clone master "https://github.com/coolsnowwolf/luci" "cool" luci/applications/{luci-app-filetransfer,luci-app-guest-wifi,luci-app-ramfree,luci-app-arpbind} && mv -n luci/libs/luci-lib-fs ./packages/
+git clone --depth 1 -b master https://github.com/coolsnowwolf/luci && mv -n luci/applications/{luci-app-filetransfer,luci-app-guest-wifi,luci-app-ramfree,luci-app-arpbind} ./ && mv -n luci/libs/luci-lib-fs ./packages/
 rm -rf luci
 #sed -i 's/msgstr"/msgstr "/g' ./*guest-wifi/po/zh-cn/guest-wifi.po
 
@@ -78,7 +78,13 @@ sed -i \
 
 
 cd packages
-git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,ipt2socks,microsocks,mosdns,naiveproxy,natmap,pdnsd-alt,redsocks2,shadowsocks-rust,shadow-tls,simple-obfs,sing-box,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin} lang/lua/lua-neturl
+git clone --depth 1 -b master https://github.com/immortalwrt/packages pkg_tmp
+cp -r pkg_tmp/devel/gn ./
+for pkg in brook chinadns-ng dns2socks dns2tcp hysteria ipt2socks microsocks mosdns naiveproxy natmap pdnsd-alt redsocks2 shadowsocks-rust shadow-tls simple-obfs sing-box tcping trojan trojan-plus v2ray-geodata v2ray-plugin xray-core xray-plugin; do
+    [ -d "pkg_tmp/net/$pkg" ] && cp -r "pkg_tmp/net/$pkg" ./
+done
+[ -d "pkg_tmp/lang/lua/lua-neturl" ] && cp -r pkg_tmp/lang/lua/lua-neturl ./
+rm -rf pkg_tmp
 #svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
 # sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile
@@ -110,8 +116,6 @@ for e in $(ls -d luci-*/po); do
         ln -s zh_Hans "$e/zh-cn" 2>/dev/null
     fi
 done
-
-git rm --cached packages/lua-maxminddb
 
 rm -rf cm
 rm -rf ./*/.git &
