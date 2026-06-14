@@ -6,7 +6,7 @@ mkdir -p packages
 git clone --depth 1 https://github.com/sirpdboy/luci-app-netdata
 
 #定时设置
-git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset
+git clone --depth 1 https://github.com/sirpdboy/luci-app-taskplan taskplan &&mv -n taskplan/luci-app-taskplan ./ && rm -rf taskplan
 
 #adguardhome
 

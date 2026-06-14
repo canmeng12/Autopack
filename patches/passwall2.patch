@@ -1,76 +1,25 @@
 diff --git a/luci-app-passwall2/Makefile b/luci-app-passwall2/Makefile
-index 8cf71db..3f87c9d 100644
+index 7d04e36..f115c08 100644
 --- a/luci-app-passwall2/Makefile
 +++ b/luci-app-passwall2/Makefile
-@@ -24,13 +24,14 @@ PKG_CONFIG_DEPENDS:= \
- 	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs \
- 	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_SingBox \
- 	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client \
--	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
-+	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin \
-+	CONFIG_PACKAGE_$(PKG_NAME)_INCLUDE_Xray \
- 
- LUCI_TITLE:=LuCI support for PassWall 2
- LUCI_PKGARCH:=all
- LUCI_DEPENDS:=+coreutils +coreutils-base64 +coreutils-nohup +curl \
- 	+ip-full +libuci-lua +lua +luci-compat +luci-lib-jsonc +resolveip +tcping \
--	+xray-core +geoview +v2ray-geoip +v2ray-geosite \
-+	+geoview +v2ray-geoip +v2ray-geosite \
- 	+unzip \
- 	+PACKAGE_$(PKG_NAME)_INCLUDE_IPv6_Nat:ip6tables-mod-nat
- 
-@@ -91,7 +92,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Client
- 	bool "Include Shadowsocks Libev Client"
- 	select PACKAGE_shadowsocks-libev-ss-local
- 	select PACKAGE_shadowsocks-libev-ss-redir
--	default y
-+	default n
- 
- config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev_Server
- 	bool "Include Shadowsocks Libev Server"
-@@ -102,7 +103,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
+@@ -101,7 +101,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Client
  	bool "Include Shadowsocks Rust Client"
- 	depends on aarch64||arm||i386||mips||mipsel||x86_64
+ 	depends on !i386
  	select PACKAGE_shadowsocks-rust-sslocal
--	default y if aarch64
-+	default n
+-	default y if aarch64||x86_64
++	default y
  
  config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Rust_Server
  	bool "Include Shadowsocks Rust Server"
-@@ -129,7 +130,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Simple_Obfs
- config PACKAGE_$(PKG_NAME)_INCLUDE_SingBox
- 	bool "Include Sing-Box"
- 	select PACKAGE_sing-box
--	default y if aarch64||arm||i386||x86_64
-+	default y
- 
- config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
- 	bool "Include tuic-client"
-@@ -140,7 +141,12 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_tuic_client
- config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray_Plugin
- 	bool "Include V2ray-Plugin (Shadowsocks Plugin)"
- 	select PACKAGE_v2ray-plugin
--	default y if aarch64||arm||i386||x86_64
-+	default n
-+
-+config PACKAGE_$(PKG_NAME)_INCLUDE_Xray
-+	bool "Include Xray"
-+	select PACKAGE_Xray
-+	default y
- 
- endif
- endmenu
 diff --git a/luci-app-passwall2/root/usr/share/passwall2/0_default_config b/luci-app-passwall2/root/usr/share/passwall2/0_default_config
-index 83e60ae..4690a2e 100644
+index 647a2d9..8a67840 100644
 --- a/luci-app-passwall2/root/usr/share/passwall2/0_default_config
 +++ b/luci-app-passwall2/root/usr/share/passwall2/0_default_config
-@@ -30,8 +30,8 @@ config global_forwarding
- 	option tcp_redir_ports '22,25,53,143,465,587,853,993,995,80,443'
+@@ -31,7 +31,7 @@ config global_forwarding
  	option udp_redir_ports '1:65535'
  	option accept_icmp '0'
--	option use_nft '0'
+ 	option prefer_nft '1'
 -	option tcp_proxy_way 'redirect'
-+	option use_nft '1'
 +	option tcp_proxy_way 'tproxy'
  	option ipv6_tproxy '0'
  
