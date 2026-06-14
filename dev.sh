@@ -9,10 +9,10 @@ git clone --depth 1 https://github.com/sirpdboy/luci-app-netdata
 git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset
 
 #adguardhome
-git clone --depth 1 https://github.com/kiddin9/kwrt-packages packages12 && mv -n packages12/adguardhome ./packages/
-rm -rf packages12
-git clone --depth 1 https://github.com/Hyy2001X/AutoBuild-Packages packages12 && mv -n packages12/luci-app-adguardhome ./ 
-rm -rf packages12
+
+git clone --depth 1 https://github.com/kenzok8/wall && mv -n wall/{adguardhome,trojan-plus,ssocks} ./packages/
+rm -rf wall
+git clone --depth 1 https://github.com/kenzok78/luci-app-adguardhome
 #sed -i 's@.*AdGuardHome.yaml*@#&@g' ./*adguardhome/Makefile
 #sed -i 's/AdGuardHome.yaml/config\/AdGuardHome.yaml/g' ./*adguardhome/root/etc/config/AdGuardHome
 #sed -i 's/default y/default n/g' ./*adguardhome/Makefile
@@ -22,24 +22,23 @@ git clone --depth 1 https://github.com/gdy666/luci-app-lucky lucky && mv -n luck
 rm -rf lucky
 
 #passwall
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2 passwall2 && mv -n passwall2/luci-app-passwall2 ./
+git clone --depth 1 https://github.com/Openwrt-Passwall/openwrt-passwall2 passwall2 && mv -n passwall2/luci-app-passwall2 ./
 rm -rf passwall2
 
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall1 && mv -n passwall1/luci-app-passwall ./
+git clone --depth 1 https://github.com/Openwrt-Passwall/openwrt-passwall passwall1 && mv -n passwall1/luci-app-passwall ./
 rm -rf passwall1
 #sed -i '92 s/n/y/' ./luci-app-passwall/Makefile
 #sed -i '148 s/n /y /' ./luci-app-passwall/Makefile
 
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall-packages packages1 && mv -n packages1/{sing-box,trojan-plus,tuic-client,v2ray-core,ipt2socks,ssocks,shadowsocksr-libev,geoview} ./packages/
+git clone --depth 1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages packages1 && mv -n packages1/{shadowsocksr-libev,geoview} ./packages/
 rm -rf packages1
 
 #ssrplus
-
-git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci-app-ssr-plus ./ && mv -n helloworld/{lua-neturl,shadow-tls,dns2socks-rust} ./packages/
+git clone --depth 1 https://github.com/fw876/helloworld && mv -n helloworld/luci-app-ssr-plus ./ && mv -n helloworld/{shadowsocks-libev,tuic-client,dns2socks-rust,mihomo} ./packages/
 rm -rf helloworld
 
 #文件传输,访客网络，释放内存，IP/MAC绑定
-git clone --depth 1 https://github.com/coolsnowwolf/luci && mv -n luci/applications/{luci-app-filetransfer,luci-app-guest-wifi,luci-app-ramfree,luci-app-arpbind} ./ && mv -n luci/libs/luci-lib-fs ./packages/
+git_sparse_clone master "https://github.com/coolsnowwolf/luci" "cool" luci/applications/{luci-app-filetransfer,luci-app-guest-wifi,luci-app-ramfree,luci-app-arpbind} && mv -n luci/libs/luci-lib-fs ./packages/
 rm -rf luci
 #sed -i 's/msgstr"/msgstr "/g' ./*guest-wifi/po/zh-cn/guest-wifi.po
 
@@ -73,13 +72,13 @@ sed -i \
     -e 's?\.\./\.\./luci.mk?$(TOPDIR)/feeds/luci/luci.mk?' \
     */Makefile
 
-git clone --depth 1 https://github.com/openwrt/packages packages13 && mv -n packages13/net/v2ray-core/test.sh ./packages/v2ray-core/
-rm -rf packages13
+# git clone --depth 1 https://github.com/openwrt/packages packages13 && mv -n packages13/net/v2ray-core/test.sh ./packages/v2ray-core/
+# rm -rf packages13
 
 
 
 cd packages
-git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadowsocks-rust,simple-obfs,tcping,trojan,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns,natmap}
+git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns,natmap} 
 #svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
 # sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile

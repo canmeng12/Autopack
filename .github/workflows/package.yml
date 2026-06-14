@@ -6,9 +6,8 @@ on:
       - ".github/workflows/package.yml"
       - "patches/*"
       - "*.sh"
-      - "README.md"
   schedule:
-    - cron: 0 */12 * * *
+    - cron: '0 */12 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -16,7 +15,7 @@ on:
 
 jobs:
   build:
-    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+    if: github.event.repository.owner.id == github.event.sender.id || github.event.sender.id == ''
     runs-on: ubuntu-latest
 
     name: 更新packages
@@ -35,7 +34,7 @@ jobs:
           keep_minimum_runs: 1
 
       - name: 将存储库签出到运行器
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -45,67 +44,60 @@ jobs:
           git config --global user.name "github-actions[bot]"
           sudo timedatectl set-timezone "Asia/Shanghai"
 
-
       - name: 克隆包
         run: |
-          # 切换到 GitHub 工作区目录
-          cd "$GITHUB_WORKSPACE" || exit 1
           # 将目标脚本设置为可执行
-          chmod +x "${{matrix.target}}.sh"
+          chmod +x "${{ matrix.target }}.sh"
           # 克隆 GitHub 仓库到目标目录
-          git clone https://github.com/canmeng12/packages.git "${{matrix.target}}"
-          # 进入克隆的目标目录
-          cd "${{matrix.target}}" || exit 1
-          # 如果目标是 dev，则检出 dev 分支
           if [ "${{ matrix.target }}" = "dev" ]; then
-              git checkout ${{matrix.target}}
+            # dev 分支直接指定分支克隆
+            git clone --branch dev https://github.com/canmeng12/packages.git "${{ matrix.target }}"
+          else
+            git clone https://github.com/canmeng12/packages.git "${{ matrix.target }}"
           fi
-          # 返回工作区目录
-          cd ..
           # 创建并进入 lxs 目录
           mkdir -p lxs && cd lxs || exit 1
           # 执行目标脚本
-          "$GITHUB_WORKSPACE/${{matrix.target}}.sh"
-          # 遍历 ls 目录中的所有文件夹并移动到目标目录
+          "$GITHUB_WORKSPACE/${{ matrix.target }}.sh"
+          # 遍历 lxs 目录中的所有文件夹并移动到目标目录
           for dir in */; do
-              # 获取文件夹名称（去掉最后的斜杠）
-              folder_name="${dir%/}"
-              # 如果目标目录中已存在同名文件夹，则删除它
-              target_dir="$GITHUB_WORKSPACE/${{matrix.target}}/$folder_name"
-              [ -d "$target_dir" ] && rm -rf "$target_dir"
-              # 移动文件夹到目标目录
-              mv "$dir" "$GITHUB_WORKSPACE/${{matrix.target}}/"
+            # 获取文件夹名称（去掉最后的斜杠）
+            folder_name="${dir%/}"
+            # 如果目标目录中已存在同名文件夹，则删除它
+            target_dir="$GITHUB_WORKSPACE/${{ matrix.target }}/$folder_name"
+            [ -d "$target_dir" ] && rm -rf "$target_dir"
+            # 移动文件夹到目标目录
+            mv "$dir" "$GITHUB_WORKSPACE/${{ matrix.target }}/"
           done
-          # 返回工作区目录
-          cd $GITHUB_WORKSPACE/${{matrix.target}}
-          # 删除 ls 文件夹
+          # 返回目标目录并删除 lxs 文件夹
+          cd "$GITHUB_WORKSPACE/${{ matrix.target }}" || exit 1
           rm -rf lxs
 
       - name: 补丁
+        if: matrix.target == 'dev'
         run: |
-          if [ "${{ matrix.target }}" = "dev" ]; then
-              find "patches" -type f -name '*.patch' -print0 | sort -z | while IFS= read -r -d '' patch_file; do
-                  if patch -d "$GITHUB_WORKSPACE/${{ matrix.target }}" -p1 -E --forward --no-backup-if-mismatch < "$patch_file"; then
-                    echo "成功应用补丁: $patch_file"
-                  else
-                    echo "失败应用补丁: $patch_file"
-                  fi
-              done
+          patch_dir="$GITHUB_WORKSPACE/patches"
+          if [ -d "$patch_dir" ]; then
+            find "$patch_dir" -type f -name '*.patch' -print0 | sort -z | while IFS= read -r -d '' patch_file; do
+              if patch -d "$GITHUB_WORKSPACE/${{ matrix.target }}" -p1 -E --forward --no-backup-if-mismatch < "$patch_file"; then
+                echo "成功应用补丁: $patch_file"
+              else
+                echo "失败应用补丁: $patch_file"
+              fi
+            done
           fi
 
       - name: 上传包
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          [ -e $GITHUB_WORKSPACE/LICENSE ] && cp $GITHUB_WORKSPACE/LICENSE $GITHUB_WORKSPACE/${{matrix.target}}
-          #[ -e $GITHUB_WORKSPACE/README.md ] && cp $GITHUB_WORKSPACE/README.md $GITHUB_WORKSPACE/${{matrix.target}}
-          cd $GITHUB_WORKSPACE/${{matrix.target}}
-          # git checkout --orphan latest_branch
-          # git add -A
-          # git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
-          # git branch -D ${{matrix.target}}
-          # git branch -m ${{matrix.target}}
-          # git push -f "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
+          [ -e "$GITHUB_WORKSPACE/LICENSE" ] && cp "$GITHUB_WORKSPACE/LICENSE" "$GITHUB_WORKSPACE/${{ matrix.target }}/"
+          cd "$GITHUB_WORKSPACE/${{ matrix.target }}" || exit 1
+          # 如果没有变更，跳过提交
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "没有变更，跳过提交"
+            exit 0
+          fi
           git add .
           git commit -am "update $(date +%Y-%m-%d" "%H:%M:%S)"
-          git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{matrix.target}}
+          git push --quiet "https://${{ secrets.ACCESS_TOKEN }}@github.com/canmeng12/packages.git" HEAD:${{ matrix.target }}
