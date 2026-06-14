@@ -78,7 +78,7 @@ sed -i \
 
 
 cd packages
-git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,microsocks,naiveproxy,pdnsd-alt,redsocks2,shadowsocks-rust,simple-obfs,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin,mosdns,natmap} 
+git_sparse_clone master "https://github.com/immortalwrt/packages" "imm" devel/gn net/{brook,chinadns-ng,dns2socks,dns2tcp,hysteria,ipt2socks,microsocks,mosdns,naiveproxy,natmap,pdnsd-alt,redsocks2,shadowsocks-rust,shadow-tls,simple-obfs,sing-box,tcping,trojan,trojan-plus,v2ray-geodata,v2ray-plugin,xray-core,xray-plugin} lang/lua/lua-neturl
 #svn export https://github.com/openwrt/packages/trunk/net/xray-core/test.sh && mv -n test.sh ./xray-core
 # sed -i 's/36\.1/37-RC2/g' smartdns/Makefile
 # sed -i 's/PKG_HASH:=.*/PKG_HASH:=b5fb39d759e333a37b33e56177bd3c7965387b8b1312f45d8709b178ac58f655/g' smartdns/Makefile
