@@ -34,7 +34,7 @@ jobs:
           keep_minimum_runs: 1
 
       - name: 将存储库签出到运行器
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
