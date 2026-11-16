@@ -1,77 +1,62 @@
-diff --git a/luci-app-autotimeset/luasrc/controller/autotimeset.lua b/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-index 2f3fd8c..383f02f 100644
---- a/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-+++ b/luci-app-autotimeset/luasrc/controller/autotimeset.lua
-@@ -5,15 +5,15 @@ function index()
- 	if not nixio.fs.access("/etc/config/autotimeset") then
- 		return
- 	end
--        entry({"admin", "control"}, firstchild(), "Control", 44).dependent = false
--        local e = entry({"admin", "control", "autotimeset"}, alias("admin", "control", "autotimeset", "scheduledtask"), _("Scheduled Setting"), 20)
-+        entry({"admin", "services"}, firstchild(), "services", 44).dependent = false
-+        local e = entry({"admin", "services", "autotimeset"}, alias("admin", "services", "autotimeset", "scheduledtask"), _("Scheduled Setting"), 20)
- 	e.dependent = false
- 	e.acl_depends = { "luci-app-autotimeset" }
--        entry({"admin", "control", "autotimeset", "scheduledtask"}, cbi("autotimeset/scheduledtask"),  _("Scheduled task"), 10).leaf = true
--        entry({"admin", "control", "autotimeset", "startuptask"}, cbi("autotimeset/startuptask"),  _("Startup task"), 20).leaf = true
--        entry({"admin", "control", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 30).leaf = true
--        entry({"admin","control","autotimeset","dellog"},call("dellog"))
--        entry({"admin","control","autotimeset","getlog"},call("getlog"))
-+        entry({"admin", "services", "autotimeset", "scheduledtask"}, cbi("autotimeset/scheduledtask"),  _("Scheduled task"), 10).leaf = true
-+        entry({"admin", "services", "autotimeset", "startuptask"}, cbi("autotimeset/startuptask"),  _("Startup task"), 20).leaf = true
-+        entry({"admin", "services", "autotimeset", "log"}, form("autotimeset/log"), _("Log"), 30).leaf = true
-+        entry({"admin","services","autotimeset","dellog"},call("dellog"))
-+        entry({"admin","services","autotimeset","getlog"},call("getlog"))
- end
+diff --git a/luci-app-taskplan/root/usr/share/luci/menu.d/luci-app-taskplan.json b/luci-app-taskplan/root/usr/share/luci/menu.d/luci-app-taskplan.json
+index c0b8c3a..3b4af39 100644
+--- a/luci-app-taskplan/root/usr/share/luci/menu.d/luci-app-taskplan.json
++++ b/luci-app-taskplan/root/usr/share/luci/menu.d/luci-app-taskplan.json
+@@ -1,12 +1,12 @@
+ {
+-	"admin/control": {
+-		"title": "Control",
++	"admin/services": {
++		"title": "services",
+ 		"order": 44,
+ 		"action": {
+ 			"type": "firstchild"
+ 		}
+ 	},
+-	"admin/control/taskplan": {
++	"admin/services/taskplan": {
+ 		"title": "Task Plan",
+ 		"order": 60,
+ 		"action": {
+@@ -17,7 +17,7 @@
+ 			"uci": { "taskplan": true }
+ 		}
+ 	},
+-	"admin/control/taskplan/scheduled": {
++	"admin/services/taskplan/scheduled": {
+ 		"title": "Scheduled Tasks",
+ 		"order": 10,
+ 		"action": {
+@@ -25,7 +25,7 @@
+ 			"path": "taskplan/scheduled"
+ 		}
+ 	},
+-	"admin/control/taskplan/startup": {
++	"admin/services/taskplan/startup": {
+ 		"title": "Startup Tasks",
+ 		"order": 20,
+ 		"action": {
+@@ -33,7 +33,7 @@
+ 			"path": "taskplan/startup"
+ 		}
+ 	},
+-	"admin/control/taskplan/log": {
++	"admin/services/taskplan/log": {
+ 		"title": "Log Viewer",
+ 		"order": 30,
+ 		"action": {
+diff --git a/luci-app-taskplan/po/zh_Hans/taskplan.po b/luci-app-taskplan/po/zh_Hans/taskplan.po
+index 2a9f461..fe23c11 100644
+--- a/luci-app-taskplan/po/zh_Hans/taskplan.po
++++ b/luci-app-taskplan/po/zh_Hans/taskplan.po
+@@ -10,8 +10,8 @@ msgstr ""
+ "Language: zh_Hans\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
  
- function getlog()
-diff --git a/luci-app-autotimeset/luasrc/view/autotimeset/log.htm b/luci-app-autotimeset/luasrc/view/autotimeset/log.htm
-index 0f1b859..9fe1437 100644
---- a/luci-app-autotimeset/luasrc/view/autotimeset/log.htm
-+++ b/luci-app-autotimeset/luasrc/view/autotimeset/log.htm
-@@ -16,7 +16,7 @@ function createAndDownloadFile(fileName,content){
- }
+-msgid "Control"
+-msgstr "管控"
++#msgid "Control"
++#msgstr "管控"
  
- function apply_del_log(){
--	XHR.get('<%=url([[admin]],[[control]],[[autotimeset]],[[dellog]])%>',null,function(x,data){
-+	XHR.get('<%=url([[admin]],[[services]],[[autotimeset]],[[dellog]])%>',null,function(x,data){
- 	var lv=document.getElementById('cbid.logview.1.conf');
- 		lv.innerHTML="";
- 	}
-@@ -35,7 +35,7 @@ function reverselog(){
- 	return
- }
- 
--XHR.poll(3,'<%=url([[admin]],[[control]],[[autotimeset]],[[getlog]])%>',null,
-+XHR.poll(3,'<%=url([[admin]],[[services]],[[autotimeset]],[[getlog]])%>',null,
- 	function(x,data){
- 		var lv=document.getElementById('cbid.logview.1.conf');
- 		lv.innerHTML=""
-diff --git a/luci-app-autotimeset/po/zh-cn/autotimeset.po b/luci-app-autotimeset/po/zh-cn/autotimeset.po
-index 78c0712..3aa2bf0 100644
---- a/luci-app-autotimeset/po/zh-cn/autotimeset.po
-+++ b/luci-app-autotimeset/po/zh-cn/autotimeset.po
-@@ -107,3 +107,8 @@ msgstr "小时(0~23)"
- msgid "Minute(0~59)"
- msgstr "分钟(0~59)"
- 
-+msgid "Clear Log"
-+msgstr "清理log"
-+
-+msgid "time Setting"
-+msgstr "定时设置"
-\ No newline at end of file
-diff --git a/luci-app-autotimeset/po/zh_Hans/autotimeset.po b/luci-app-autotimeset/po/zh_Hans/autotimeset.po
-index 78c0712..3aa2bf0 100644
---- a/luci-app-autotimeset/po/zh_Hans/autotimeset.po
-+++ b/luci-app-autotimeset/po/zh_Hans/autotimeset.po
-@@ -107,3 +107,8 @@ msgstr "小时(0~23)"
- msgid "Minute(0~59)"
- msgstr "分钟(0~59)"
- 
-+msgid "Clear Log"
-+msgstr "清理log"
-+
-+msgid "time Setting"
-+msgstr "定时设置"
-\ No newline at end of file
+ msgid "Task Plan"
+ msgstr "任务设置"
